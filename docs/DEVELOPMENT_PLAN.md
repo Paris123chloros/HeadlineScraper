@@ -1,6 +1,11 @@
 # Motorsport research: development plan
 
-Status: implementation backlog; the application described here is not built yet.
+Status: phase-one foundations implemented; collection, storage, event processing,
+and reporting remain in the implementation backlog. See
+[development and local startup](DEVELOPMENT.md) for the current workflow and
+validation boundaries, and [validation results](VALIDATION.md) for checks actually
+performed. Windows Docker Desktop and the user's installed Qwen model remain
+pending local validation.
 
 ## Product agreement
 

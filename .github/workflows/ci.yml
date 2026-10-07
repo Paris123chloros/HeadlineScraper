@@ -1,0 +1,36 @@
+name: Foundation checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install uv==0.12.19
+      - run: uv sync --locked --all-extras
+      - run: uv run --locked ruff check
+      - run: uv run --locked ruff format --check
+      - run: uv run --locked --all-extras pytest
+      - run: uv build --wheel
+      - run: uv run --locked --extra legacy python -c "from motosport.motobot import MotoBot"
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config --quiet
+      - run: docker build -t motorsport-research:ci .
+      - run: docker run --rm motorsport-research:ci --version
+      - run: docker run --rm motorsport-research:ci config
+      - run: python scripts/check_docker.py --image motorsport-research:ci

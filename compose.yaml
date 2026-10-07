@@ -1,0 +1,57 @@
+name: motorsport-research
+
+x-application: &application
+  image: ${MOTORSPORT_IMAGE:-motorsport-research:local}
+  build: .
+  environment:
+    OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://motorsport-ollama:11434}
+    OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3.5-instruct:4b}
+    OLLAMA_TIMEOUT_SECONDS: ${OLLAMA_TIMEOUT_SECONDS:-5}
+    REPORT_TIMEZONE: ${REPORT_TIMEZONE:-Europe/Athens}
+    LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    DATA_DIR: /data
+  volumes:
+    - research-data:/data
+    - source-documents:/data/documents
+    - generated-reports:/data/reports
+  networks:
+    - ollama
+  init: true
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  dashboard:
+    <<: *application
+    ports:
+      - "127.0.0.1:${DASHBOARD_PORT:-8000}:8000"
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/live', timeout=3)"
+      interval: 15s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+  worker:
+    <<: *application
+    # Phase-one diagnostic scaffold; persistent jobs are implemented in phase eight.
+    profiles: [tools]
+    command: [check-ollama]
+    restart: "no"
+
+networks:
+  ollama:
+    external: true
+    name: ${OLLAMA_NETWORK:-motorsport-ai}
+
+volumes:
+  research-data:
+  source-documents:
+  generated-reports:
