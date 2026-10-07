@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     report_timezone: str = "Europe/Athens"
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
     data_dir: Path = Path("data")
+    source_catalogue: Path = Path("config/sources.yaml")
 
     @field_validator("ollama_base_url")
     @classmethod

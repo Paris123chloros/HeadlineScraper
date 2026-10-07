@@ -37,6 +37,10 @@ COUNT_TABLES = (
     "record_versions",
     "extraction_runs",
     "jobs",
+    "source_configurations",
+    "collection_runs",
+    "collection_requests",
+    "discovered_links",
 )
 
 

@@ -1,3 +1,172 @@
-# Source catalogue and schema will be introduced in phase three.
-# An empty catalogue does not establish live collection coverage.
-sources: []
+# Eight enabled endpoints verified in the cloud on 2026-10-07; disabled candidates remain pending.
+# Declared coverage is a collection scope, never evidence that an article concerns a series.
+schema_version: 1
+sources:
+  - key: f1-official
+    name: Formula 1 news
+    homepage: https://www.formula1.com/
+    url: https://www.formula1.com/en/latest
+    kind: official
+    role: championship
+    publisher: Formula 1
+    issuing_body: Formula 1
+    championships: [F1]
+    topics: [race, penalties, contracts, sport-news]
+    method: http
+    availability: usable
+    notes: Verified English news index with current F1 headlines; article-link discovery needs a site adapter.
+
+  - key: wec-official
+    name: FIA WEC news
+    homepage: https://www.fiawec.com/
+    url: https://www.fiawec.com/en/news
+    kind: official
+    role: championship
+    publisher: FIA World Endurance Championship
+    issuing_body: FIA WEC
+    championships: [WEC]
+    topics: [race, penalties, contracts, sport-news]
+    method: http
+    availability: usable
+    notes: Verified English WEC index with current endurance news; article-link discovery needs a site adapter.
+
+  - key: wrc-official
+    name: WRC news
+    homepage: https://www.wrc.com/
+    url: https://www.wrc.com/en/news
+    kind: official
+    role: championship
+    publisher: WRC Promoter
+    issuing_body: WRC
+    championships: [WRC]
+    topics: [race, penalties, contracts, sport-news]
+    method: http
+    availability: usable
+    notes: Verified English WRC news index with current rally headlines and summaries.
+
+  - key: dtm-official
+    name: DTM news
+    homepage: https://www.dtm.com/
+    url: https://www.dtm.com/en/news
+    kind: official
+    role: championship
+    publisher: ADAC DTM
+    issuing_body: ADAC
+    championships: [DTM]
+    topics: [race, penalties, contracts, sport-news]
+    method: http
+    enabled: false
+    availability: needs_browser
+    allowed_hosts: [www.dtm.com, dtm.com, www.adac-motorsport.de]
+    notes: Observed unsupported response and an HTML shell without news text; disabled pending site/browser adapter validation.
+
+  - key: fia-news
+    name: FIA announcements
+    homepage: https://www.fia.com/
+    url: https://www.fia.com/news
+    kind: official
+    role: governing_body
+    publisher: Fédération Internationale de l'Automobile
+    issuing_body: FIA
+    championships: []
+    topics: [fia-announcements, regulations, investigations, controversies]
+    method: http
+    availability: usable
+    notes: Verified organization-wide FIA news index; do not assign every statement to all four series.
+
+  - key: fia-f1-documents
+    name: FIA F1 event documents
+    homepage: https://www.fia.com/
+    url: https://www.fia.com/documents
+    kind: official
+    role: governing_body
+    publisher: Fédération Internationale de l'Automobile
+    issuing_body: FIA
+    championships: [F1]
+    topics: [decisions, penalties, classifications]
+    method: http
+    enabled: false
+    availability: unverified
+    notes: Candidate document index; championship filters and PDF discovery need the phase-four adapter.
+
+  - key: motorsport-f1
+    name: Motorsport.com F1 feed
+    homepage: https://www.motorsport.com/
+    url: https://www.motorsport.com/rss/f1/news/
+    kind: independent
+    role: newsroom
+    publisher: Motorsport Network
+    championships: [F1]
+    topics: [race, penalties, contracts, sport-news, controversies]
+    method: rss
+    availability: usable
+    notes: Verified English F1 RSS with article links; shares publisher with the other Motorsport.com feeds.
+
+  - key: motorsport-wec
+    name: Motorsport.com WEC feed
+    homepage: https://www.motorsport.com/
+    url: https://www.motorsport.com/rss/wec/news/
+    kind: independent
+    role: newsroom
+    publisher: Motorsport Network
+    championships: [WEC]
+    topics: [race, penalties, contracts, sport-news, controversies]
+    method: rss
+    availability: usable
+    notes: Verified English WEC RSS; not an independent corroborator of another feed from this publisher.
+
+  - key: motorsport-wrc
+    name: Motorsport.com WRC feed
+    homepage: https://www.motorsport.com/
+    url: https://www.motorsport.com/rss/wrc/news/
+    kind: independent
+    role: newsroom
+    publisher: Motorsport Network
+    championships: [WRC]
+    topics: [race, penalties, contracts, sport-news, controversies]
+    method: rss
+    availability: usable
+    notes: Verified English WRC RSS; upstream article attribution remains a later parsing task.
+
+  - key: motorsport-dtm
+    name: Motorsport.com DTM feed
+    homepage: https://www.motorsport.com/
+    url: https://www.motorsport.com/rss/dtm/news/
+    kind: independent
+    role: newsroom
+    publisher: Motorsport Network
+    championships: [DTM]
+    topics: [race, penalties, contracts, sport-news, controversies]
+    method: rss
+    availability: usable
+    notes: Verified English DTM RSS with active racing coverage and article links.
+
+  - key: ferrari-f1
+    name: Ferrari Formula 1 newsroom
+    homepage: https://www.ferrari.com/
+    url: https://www.ferrari.com/en-EN/formula1
+    kind: official
+    role: team
+    publisher: Scuderia Ferrari
+    issuing_body: Scuderia Ferrari
+    championships: [F1]
+    topics: [contracts, team-news, race]
+    method: http
+    enabled: false
+    availability: unverified
+    notes: Candidate team landing page; disabled until live access and extraction are verified.
+
+  - key: toyota-wec
+    name: Toyota Gazoo Racing WEC newsroom
+    homepage: https://www.toyotagazooracing.com/
+    url: https://www.toyotagazooracing.com/wec/
+    kind: official
+    role: team
+    publisher: Toyota Gazoo Racing
+    issuing_body: Toyota Gazoo Racing
+    championships: [WEC]
+    topics: [contracts, team-news, race]
+    method: http
+    enabled: false
+    availability: unverified
+    notes: Candidate team index; disabled until redirects and English content are verified.

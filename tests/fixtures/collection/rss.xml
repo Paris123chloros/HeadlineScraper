@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+<title>Synthetic motorsport feed</title>
+<description>Offline fixture only; no real events or people.</description>
+<item><title>Fictional race bulletin</title><link>https://example.invalid/news/bulletin#section</link>
+<guid>synthetic:bulletin</guid><pubDate>Thu, 01 Jan 2026 13:00:00 +0200</pubDate>
+<description><![CDATA[<p>A fictional <strong>investigation</strong> was announced.</p>]]></description></item>
+<item><title>Fictional response</title><link>/news/response</link>
+<guid>synthetic:response</guid><pubDate>unknown</pubDate>
+<description>A fictional party supplied a response. No finding is asserted.</description></item>
+</channel></rss>

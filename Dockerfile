@@ -21,6 +21,7 @@ RUN --mount=type=secret,id=build_ca_bundle \
         export SSL_CERT_FILE=/run/secrets/build_ca_bundle UV_SYSTEM_CERTS=true; \
     fi; \
     uv sync --locked --no-dev --no-editable \
+    && chmod -R a+rX /app/config \
     && useradd --uid 10001 --create-home app \
     && mkdir -p /data/documents /data/reports \
     && chown -R app:app /data

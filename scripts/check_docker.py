@@ -89,6 +89,25 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
+        if self.path == '/collection-feed':
+            if self.headers.get('If-None-Match') == '"synthetic-feed"':
+                self.send_response(304)
+                self.end_headers()
+                return
+            body = (
+                b'<rss version="2.0"><channel><title>Synthetic container feed</title>'
+                b'<item><title>Fictional bulletin</title>'
+                b'<link>https://example.invalid/bulletin</link>'
+                b'<description>Offline fixture; not a real event.</description>'
+                b'</item></channel></rss>'
+            )
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/rss+xml')
+            self.send_header('ETag', '"synthetic-feed"')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         if self.path != '/api/tags':
             self.send_error(404)
             return
@@ -212,6 +231,60 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         else:
             raise RuntimeError("Synthetic Ollama fixture was not reachable")
         assert available["body"]["model_available"] is True, available
+        synthetic_catalogue = {
+            "schema_version": 1,
+            "sources": [
+                {
+                    "key": "docker-fixture",
+                    "name": "Synthetic Docker feed",
+                    "homepage": "https://example.invalid/",
+                    "url": "http://host.docker.internal:11434/collection-feed",
+                    "kind": "unknown",
+                    "role": "newsroom",
+                    "publisher": "Synthetic fixture",
+                    "championships": ["F1", "WEC", "WRC", "DTM"],
+                    "method": "rss",
+                    "availability": "unverified",
+                    "notes": "Offline container fixture, not live coverage",
+                    "host_interval_seconds": 0.1,
+                }
+            ],
+        }
+        run(
+            [
+                *compose,
+                "exec",
+                "-T",
+                "dashboard",
+                "python",
+                "-c",
+                "import sys; from pathlib import Path; "
+                "Path('/tmp/collection-check.json').write_text(sys.stdin.read())",
+            ],
+            input_text=json.dumps(synthetic_catalogue),
+        )
+        collect = [
+            *compose,
+            "exec",
+            "-T",
+            "dashboard",
+            "motorsport-research",
+            "collect",
+            "--catalogue",
+            "/tmp/collection-check.json",
+            "--force",
+        ]
+        collected = json.loads(run(collect))[0]
+        cached = json.loads(run(collect))[0]
+        assert collected["outcome"] == "success", collected
+        assert collected["discovered_links"] == 1, collected
+        assert cached["outcome"] == "not_modified", cached
+        assert collected["document_version_id"] == cached["document_version_id"]
+        configured = json.loads(
+            run([*compose, "exec", "-T", "dashboard", "motorsport-research", "sources"])
+        )
+        assert len(configured["sources"]) >= 9, configured
+        assert probe("/api/collection")["http_status"] == 200
         diagnostic = json.loads(run([*compose, "run", "--rm", "worker"]))
         assert diagnostic["status"] == "ready", diagnostic
         missing = json.loads(
@@ -225,10 +298,13 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         wait_for_liveness()
         assert probe("/health/ollama")["http_status"] == 200
         persistent = probe("/health/storage")
-        assert persistent["body"]["counts"]["document_versions"] == 1, persistent
+        assert persistent["body"]["counts"]["document_versions"] == 2, persistent
         assert persistent["body"]["counts"]["claims"] == 2, persistent
+        assert persistent["body"]["counts"]["collection_runs"] == 2, persistent
+        assert persistent["body"]["counts"]["discovered_links"] == 1, persistent
         print("PASS: image CLI, Compose startup/restart, local port binding, non-root volumes")
         print("PASS: migrations, repeatable evidence import, claim trace, persistent records")
+        print("PASS: packaged catalogue, HTTP collection, conditional 304, persistent history")
         print("PASS: Ollama offline, installed-tag fixture, and missing-tag diagnostic exit code")
         print("Synthetic host routing only; Windows host forwarding and inference are unverified.")
     finally:

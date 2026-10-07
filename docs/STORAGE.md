@@ -109,8 +109,10 @@ Use `open_repository(data_dir)` as a transaction context for writes and
 foreign keys, WAL, and a busy timeout; exceptions escaping the context roll back
 the batch. Read-only connections cannot initialize or mutate storage.
 
-Three packaged migrations establish evidence records, domain records, and immutable
-history. Migration names and normalized-text SHA-256 checksums are recorded. Changed
+The first three packaged migrations establish evidence records, domain records, and
+immutable history. Phase three adds a fourth migration for collection configurations,
+runs, requests, caches, host pacing, and feed discovery. Migration names and
+normalized-text SHA-256 checksums are recorded. Changed
 applied migrations, missing history, and newer unsupported schemas are refused.
 SQL is applied within one explicit transaction, including DDL; failed upgrades
 preserve the previous schema and data. Historical rows and evidence links reject

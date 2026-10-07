@@ -12,6 +12,7 @@ def isolated_settings(monkeypatch, tmp_path):
         "REPORT_TIMEZONE",
         "LOG_LEVEL",
         "DATA_DIR",
+        "SOURCE_CATALOGUE",
     ):
         monkeypatch.delenv(name, raising=False)
         monkeypatch.delenv(name.lower(), raising=False)

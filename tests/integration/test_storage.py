@@ -221,11 +221,11 @@ def test_migration_upgrade_preserves_data_and_failed_upgrade_is_atomic(tmp_path)
     )
     connection.commit()
     connection.close()
-    assert initialize(tmp_path) == 3
-    assert initialize(tmp_path) == 3
+    assert initialize(tmp_path) == len(steps)
+    assert initialize(tmp_path) == len(steps)
     bad = Migration(
-        4,
-        "004_bad.sql",
+        len(steps) + 1,
+        "005_bad.sql",
         "CREATE TABLE should_rollback(id TEXT);\nINSERT INTO missing VALUES (1);\n",
     )
     with pytest.raises(sqlite3.OperationalError):
@@ -238,7 +238,7 @@ def test_migration_upgrade_preserves_data_and_failed_upgrade_is_atomic(tmp_path)
             ).fetchone()
             is None
         )
-        assert repository.stats()["schema_version"] == 3
+        assert repository.stats()["schema_version"] == len(steps)
 
 
 def test_migration_checksums_and_newer_schema_are_rejected(data):
@@ -251,7 +251,10 @@ def test_migration_checksums_and_newer_schema_are_rejected(data):
     clean = data / "other"
     initialize(clean)
     connection = sqlite3.connect(clean / "research.sqlite3")
-    connection.execute("INSERT INTO schema_migrations VALUES (4, 'future', 'future', 'future')")
+    connection.execute(
+        "INSERT INTO schema_migrations VALUES (?, 'future', 'future', 'future')",
+        (len(migrations()) + 1,),
+    )
     connection.commit()
     connection.close()
     with pytest.raises(StorageError, match="newer"):
@@ -398,7 +401,7 @@ def test_cli_import_is_repeatable_and_storage_health_is_independent(tmp_path, mo
         assert client.get("/health/storage").status_code == 503
         assert client.get("/health/live").status_code == 200
         assert main(["db-init"]) == 0
-        assert json.loads(capsys.readouterr().out)["schema_version"] == 3
+        assert json.loads(capsys.readouterr().out)["schema_version"] == len(migrations())
         assert main(["import-fixture", str(FIXTURE)]) == 0
         first = json.loads(capsys.readouterr().out)
         assert main(["import-fixture", str(FIXTURE)]) == 0

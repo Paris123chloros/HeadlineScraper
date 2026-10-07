@@ -1,5 +1,49 @@
 # Development validation
 
+## Phase three: source collection
+
+Validated on Linux in the cloud on 2026-10-07, with Python 3.12 and the
+`motorsport-research:phase-three` Docker image.
+
+| Check | Result |
+| --- | --- |
+| Complete Python suite, including collection failure cases | 75 passed |
+| Catalogue validation, RSS/Atom discovery, offset dates and unknown dates | Passed |
+| Conditional caching, duplicate import, changed feeds and cache integrity | Passed |
+| Timeout/retry budgets, slow headers/trickling bodies, HTTP denial and proxy failure | Passed |
+| Durable host pacing and server `Retry-After` across forced collections | Passed |
+| Redirect loops, unapproved hosts and HTTPS downgrade refusal | Passed |
+| Malformed/unsafe feeds, streaming size limits and unsupported formats | Passed |
+| Migration from existing phase-two storage and immutable attempt history | Passed |
+| Offline fixtures covering all four series and FIA | Passed; synthetic content |
+| Ruff lint/format, locked dependencies, wheel and Compose configuration | Passed |
+| Legacy scraper import | Passed; original source unchanged |
+| Docker non-root catalogue access and real HTTP feed collection | Passed |
+| Docker conditional 304 and collection persistence after restart | Passed |
+| Existing Docker/Ollama diagnostic and evidence acceptance checks | Passed with synthetic responses |
+| Live official F1, WEC, WRC and FIA indexes | Passed; relevant archived news text inspected |
+| Live Motorsport.com F1, WEC, WRC and DTM feeds | Passed; article titles/dates/links inspected |
+| Repeated live collection of all eight enabled sources | Passed; both passes exited 0 |
+| Official DTM index | Disabled: unsupported response and HTML shell without news text |
+| Real Windows Docker Desktop, installed Ollama and inference | Pending |
+| Hosted CI workflow | Configured; no hosted run observed |
+
+The initial cloud proxy denied source requests. Required publisher domains were
+added to the onboarding network draft while preserving ESPN entries; subsequent
+live requests succeeded. These observations establish current-instance access,
+not publication of the reusable environment configuration.
+
+Live coverage now includes two usable sources each for F1, WEC and WRC, and one
+independent feed for DTM. FIA collection remains organization-wide. Source
+collection does not verify race results, corroborate article claims, or establish
+independence between feeds owned by the same publisher. Official DTM and the
+disabled team/document candidates require later adapter work.
+
+The first container check found that the non-root user could not read the copied
+catalogue. The Dockerfile now grants read/traversal access to the public catalogue;
+the rebuilt image passed the full acceptance check. The one Starlette deprecation
+warning remains. See [collection usage and limits](COLLECTION.md).
+
 ## Phase two: evidence persistence
 
 Validated on Linux in the development cloud environment using Python 3.12 and
@@ -70,5 +114,5 @@ model inference capability, or factual extraction quality. Production Compose us
 Docker Desktop's host DNS and requires no external Ollama network.
 
 See [the development guide](DEVELOPMENT.md) for repeatable commands and local
-Windows/Ollama verification. Phase three is the next implementation segment:
-the source catalogue and repeatable collection.
+Windows/Ollama verification. Phase four is the next implementation segment:
+official race data and decisions.

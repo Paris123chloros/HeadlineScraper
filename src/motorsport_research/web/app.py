@@ -7,6 +7,8 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from motorsport_research import __version__
 from motorsport_research.config import Settings, load_settings
 from motorsport_research.extraction.ollama import check_ollama
+from motorsport_research.sources.catalogue import CatalogueError, load_catalogue
+from motorsport_research.sources.store import CollectionStore
 from motorsport_research.storage.database import StorageError
 from motorsport_research.storage.repository import open_repository
 
@@ -26,8 +28,8 @@ background:#101820;color:#f4f6f8}h1{line-height:1.2}strong{color:#8ce3c0}</style
 <body><main><h1>Motorsport Research</h1><p><strong>F1 · WEC · WRC · DTM</strong></p>
 <p>A sourced record of race results, penalties, driver developments,
 FIA announcements, and controversies.</p>
-<p>The project foundation and evidence storage are available.
-Collection, the event feed, and automated
+<p>The project foundation, evidence storage, and collection CLI are available.
+The event feed and automated
 digests will arrive in subsequent development phases.</p></main></body></html>"""
 
     @app.get("/health/live")
@@ -54,6 +56,18 @@ digests will arrive in subsequent development phases.</p></main></body></html>""
                     "status": "unavailable",
                     "detail": "Storage is not ready; run db-init and check logs.",
                 },
+                status_code=503,
+            )
+
+    @app.get("/api/collection")
+    def collection_status() -> JSONResponse:
+        try:
+            catalogue = load_catalogue(settings.source_catalogue)
+            return JSONResponse(CollectionStore(settings.data_dir).status(catalogue))
+        except (CatalogueError, StorageError, sqlite3.Error, OSError) as error:
+            logging.getLogger(__name__).warning("Collection status is unavailable: %s", error)
+            return JSONResponse(
+                {"status": "unavailable", "detail": "Check storage and source catalogue."},
                 status_code=503,
             )
 
