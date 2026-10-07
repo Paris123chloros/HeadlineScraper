@@ -88,6 +88,26 @@ import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 class Handler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        if self.path != '/api/chat':
+            self.send_error(404)
+            return
+        payload = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
+        assert payload['stream'] is False and payload['think'] is False
+        assert payload['format']['additionalProperties'] is False
+        passage = json.loads(payload['messages'][1]['content'])['source_passages'][0]
+        claim = {'passage_id': passage['passage_id'], 'quote': passage['text'],
+                 'assertion_type': 'reported', 'asserted_by': None,
+                 'championships': ['F1'], 'topic': 'race', 'entities': [],
+                 'dates': [], 'numbers': [], 'uncertainty': 'stated'}
+        body = json.dumps({'model': payload['model'], 'done': True, 'done_reason': 'stop',
+            'message': {'role': 'assistant', 'content': json.dumps({'claims': [claim]})},
+            'eval_count': 100, 'eval_duration': 1000000000}).encode()
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json')
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
     def do_GET(self):
         if self.path == '/collection-feed':
             if self.headers.get('If-None-Match') == '"synthetic-feed"':
@@ -111,7 +131,8 @@ class Handler(BaseHTTPRequestHandler):
         if self.path != '/api/tags':
             self.send_error(404)
             return
-        body = json.dumps({'models': [{'name': 'qwen3.5-instruct:4b'}]}).encode()
+        models = [{'name': 'qwen3.5-instruct:4b', 'digest': 'a' * 64}]
+        body = json.dumps({'models': models}).encode()
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')
         self.send_header('Content-Length', str(len(body)))
@@ -368,6 +389,16 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         assert probe("/api/collection")["http_status"] == 200
         diagnostic = json.loads(run([*compose, "run", "--rm", "worker"]))
         assert diagnostic["status"] == "ready", diagnostic
+        extraction = json.loads(run([*article_cli, "extract-article", article["article_id"]]))
+        assert extraction["status"] == "completed" and extraction["review_required"]
+        assert extraction["model_digest"] == "a" * 64 and len(extraction["claims"]) == 1
+        replay = json.loads(run([*article_cli, "extract-article", article["article_id"]]))
+        assert replay["id"] == extraction["id"] and len(replay["attempts"]) == 1
+        generated_trace = json.loads(
+            run([*article_cli, "trace-claim", extraction["claims"][0]["claim_id"]])
+        )
+        assert generated_trace["assessment"]["label"] == "unassessed"
+        assert generated_trace["model_suggestions"][0]["metadata"]["review_required"]
         missing = json.loads(
             run(
                 [*compose, "run", "--rm", "-e", "OLLAMA_MODEL=not-installed:4b", "worker"],
@@ -380,7 +411,7 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         assert probe("/health/ollama")["http_status"] == 200
         persistent = probe("/health/storage")
         assert persistent["body"]["counts"]["document_versions"] == 6, persistent
-        assert persistent["body"]["counts"]["claims"] == 22, persistent
+        assert persistent["body"]["counts"]["claims"] == 23, persistent
         assert persistent["body"]["counts"]["collection_runs"] == 2, persistent
         assert persistent["body"]["counts"]["discovered_links"] == 1, persistent
         print("PASS: image CLI, Compose startup/restart, local port binding, non-root volumes")
@@ -396,6 +427,11 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         print("PASS: official FIA PDF classification, replay, evidence and persistent history")
         print("PASS: packaged catalogue, HTTP collection, conditional 304, persistent history")
         print("PASS: Ollama offline, installed-tag fixture, and missing-tag diagnostic exit code")
+        assert persistent["body"]["counts"]["qwen_tasks"] == 1, persistent
+        assert persistent["body"]["counts"]["qwen_claims"] == 1, persistent
+        print(
+            "PASS: synthetic schema chat, model pin, claim trace, replay and persistent inference"
+        )
         print("Synthetic host routing only; Windows host forwarding and inference are unverified.")
     finally:
         if fixture_started:

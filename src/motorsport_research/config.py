@@ -16,6 +16,11 @@ class Settings(BaseSettings):
     ollama_base_url: AnyHttpUrl = AnyHttpUrl("http://127.0.0.1:11434")
     ollama_model: str = "qwen3.5-instruct:4b"
     ollama_timeout_seconds: float = Field(default=5, gt=0, le=120)
+    qwen_timeout_seconds: float = Field(default=90, gt=0, le=120)
+    qwen_max_input_bytes: int = Field(default=4000, ge=1500, le=4000)
+    qwen_max_output_tokens: int = Field(default=1024, ge=128, le=2048)
+    qwen_max_attempts: int = Field(default=2, ge=1, le=3)
+    qwen_max_chunks: int = Field(default=32, ge=1, le=64)
     report_timezone: str = "Europe/Athens"
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
     data_dir: Path = Path("data")

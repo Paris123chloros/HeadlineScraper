@@ -44,6 +44,10 @@ COUNT_TABLES = (
     "official_ingestions",
     "article_parses",
     "article_attempts",
+    "qwen_tasks",
+    "qwen_chunks",
+    "qwen_attempts",
+    "qwen_claims",
 )
 
 
@@ -390,6 +394,16 @@ class Repository:
             **claim,
             "evidence": evidence,
             "extraction_runs": extraction_runs,
+            "model_suggestions": [
+                {
+                    "task_id": row["task_id"],
+                    "extraction_run_id": row["extraction_run_id"],
+                    "metadata": json.loads(row["metadata_json"]),
+                }
+                for row in self.connection.execute(
+                    "SELECT * FROM qwen_claims WHERE claim_id = ? ORDER BY rowid", (claim_id,)
+                )
+            ],
             "assessment": dict(assessment) if assessment else {"label": "unassessed"},
         }
 

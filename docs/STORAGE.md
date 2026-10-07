@@ -1,5 +1,13 @@
 # Phase-two evidence storage
 
+Migration 007 adds `qwen_tasks`, `qwen_chunks`, immutable `qwen_attempts` and
+`qwen_claims`. Pending tasks retain settings and exact input hashes; attempts
+retain bounded response blobs, timing and model digests. All chunks must validate
+before one transaction commits the article's claims and extraction run. A failure
+leaves no partial claims. `trace-claim` exposes `model_suggestions` alongside
+original evidence; suggested identities, dates and attribution do not become
+canonical fields or evidence assessments. See [local Qwen extraction](QWEN_EXTRACTION.md).
+
 Migration 006 adds immutable `article_parses` and `article_attempts`. Analyses
 reference original document versions, without rewriting archives or adding
 retrievals during parsing. Body fragments map to exact stored source spans;

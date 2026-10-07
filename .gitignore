@@ -12,4 +12,5 @@ dist/
 build/
 *.egg-info/
 data/
+.local-qwen-evaluation/
 news_headlines.csv

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "qwen-dev-fia",
+    "name": "Synthetic dev-fia publisher",
+    "url": "https://www.fia.com/",
+    "kind": "official"
+  },
+  "url": "https://example.invalid/dev-fia",
+  "file": "dev-fia.html",
+  "sha256": "2dc742b4ab310a5a907cd056f6ddeecc7ee51ef30c245703b2cf74dc993dac99",
+  "captured_at": "2026-10-07T13:26:16.017472+00:00",
+  "media_type": "text/html"
+}

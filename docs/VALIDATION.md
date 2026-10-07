@@ -1,5 +1,50 @@
 # Development validation
 
+## Phase six: local Qwen extraction software
+
+Validated on Linux in the cloud on 2026-10-07 with Python 3.12 and the
+`motorsport-research:phase-six` image
+(`sha256:cb404eecc72f132eeb79dce9f6167931e3bf1ba38c7ac0e132fd82316bb28bc8`).
+The software is implemented; phase-six acceptance remains pending real local
+model accuracy and throughput on representative hardware.
+
+| Check | Result |
+| --- | --- |
+| Complete Python suite | 220 passed; one existing Starlette deprecation warning |
+| Strict chat schema, input/output limits and protocol checks | Passed with synthetic HTTP responses |
+| Exact Unicode/inline evidence, fabricated names/numbers/dates, unsupported summaries | Passed; no invented evidence committed |
+| Literal dates, ambiguous alias candidates and conservative procedural/uncertainty checks | Passed; suggestions require semantic review |
+| Six manual development labels | Passed through validator using synthetic outputs; not Qwen accuracy |
+| Missing model, timeout, unavailable server and bounded invalid-completion retry | Passed; pending work retained or visible failure |
+| Real cloud connection failure | Configured host unreachable; task pending, unavailable attempt, zero claims |
+| Model digest pin/change detection, replay and explicit new run | Passed; changed weights do not commit claims |
+| Multi-chunk outage/resume, serialized leases and expired lease recovery | Passed; no network wait in write transactions |
+| Atomic whole-article commit, rollback and immutable audit/provenance | Passed |
+| Evaluation artifact, separate held-out data, scores and timing metrics | Passed using synthetic development-case inference only |
+| Cross-document score aggregation | Passed; swapped labels cannot cancel errors across cases |
+| Locked sync, Ruff lint/format, wheel modules/migration, legacy import and Compose config | Passed; no dependency or old migration changes |
+| Docker chat, trace, replay, migration 007 and restart persistence | Passed with isolated synthetic Ollama service |
+| Earlier Docker article, official PDF, collection/304 and diagnostic workflows | Passed |
+| Actual Qwen accuracy, throughput, source-instruction behavior and Windows routing | Pending local validation |
+| Automatic handling approval | False; every model suggestion requires review |
+| Hosted GitHub Actions | Configured; hosted run not observed |
+
+Docker checks use the script's own temporary resources and synthetic model
+responses. They leave real research volumes, native Ollama and Odysseus alone.
+The cloud build preserves TLS verification using the existing trusted CA bundle
+as a build secret; no new dependencies, secret requirements or network
+destinations were introduced. Public fixture files are readable by the container
+user. Raw source bytes, previous migrations and the Selenium prototype are unchanged.
+
+The twelve synthetic cases provide a small development/reserved-held-out split,
+not a representative real-news benchmark. The held-out set has not been used
+for validator tuning or mocked quality claims. No real model response, hardware
+measurement or production threshold approval has been obtained. Exact passage
+validation proves traceability, not semantic support or truth; entity links,
+attribution, temporal roles and topic/procedure interpretation remain suggestions.
+See [extraction commands and evaluation](QWEN_EXTRACTION.md) and the
+[deferred Windows/Qwen checklist](LOCAL_VALIDATION.md).
+
 ## Phase five: articles and relevance
 
 Validated on Linux in the cloud on 2026-10-07, with Python 3.12 and the

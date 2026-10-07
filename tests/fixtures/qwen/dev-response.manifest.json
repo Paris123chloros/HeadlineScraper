@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "qwen-dev-response",
+    "name": "Synthetic dev-response publisher",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/dev-response",
+  "file": "dev-response.html",
+  "sha256": "beaaf33add36fbf86098b7b84a1a24982c4d9d0be4a07a7f67665bb611a25348",
+  "captured_at": "2026-10-07T13:26:16.017659+00:00",
+  "media_type": "text/html"
+}

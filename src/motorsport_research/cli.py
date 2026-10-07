@@ -57,6 +57,28 @@ def main(argv: Sequence[str] | None = None) -> int:
     article_status = commands.add_parser("article-status", help="Inspect article parsing attempts")
     article_status.add_argument("--limit", type=int, default=50)
     article_status.add_argument("--offset", type=int, default=0)
+    extract = commands.add_parser(
+        "extract-article", help="Run review-required local Qwen extraction"
+    )
+    extract.add_argument("article_id")
+    extract.add_argument("--new-run", action="store_true", help="Create an explicit new model run")
+    retry = commands.add_parser(
+        "retry-extraction", help="Resume a pending extraction with its pinned settings"
+    )
+    retry.add_argument("task_id")
+    extraction_detail = commands.add_parser(
+        "extraction-detail", help="Inspect Qwen attempts and source selections"
+    )
+    extraction_detail.add_argument("task_id")
+    extraction_status = commands.add_parser("extraction-status", help="Inspect durable Qwen work")
+    extraction_status.add_argument("--limit", type=int, default=50)
+    extraction_status.add_argument("--offset", type=int, default=0)
+    evaluation = commands.add_parser(
+        "evaluate-qwen", help="Run a labeled dataset and save a local evaluation artifact"
+    )
+    evaluation.add_argument("--dataset", type=Path, required=True)
+    evaluation.add_argument("--output", type=Path, required=True)
+    evaluation.add_argument("--hardware", required=True)
     official = commands.add_parser(
         "import-official", help="Import a reviewed official archive manifest"
     )
@@ -109,6 +131,49 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(str(error), file=sys.stderr)
         return 2
     configure_logging(settings.log_level)
+
+    if args.command == "evaluate-qwen":
+        from motorsport_research.extraction.evaluation import evaluate
+
+        try:
+            result = evaluate(settings, args.dataset, args.output, args.hardware)
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return 0 if result["all_cases_finished"] else 1
+        except ValidationError:
+            print("Invalid evaluation dataset; check the documented schema.", file=sys.stderr)
+            return 2
+        except (StorageError, sqlite3.Error, OSError, ValueError) as error:
+            print(f"Evaluation operation failed: {error}", file=sys.stderr)
+            return 1
+
+    if args.command in {
+        "extract-article",
+        "retry-extraction",
+        "extraction-detail",
+        "extraction-status",
+    }:
+        from motorsport_research.extraction.qwen_service import QwenService
+
+        try:
+            service = QwenService(settings)
+            if args.command == "extract-article":
+                result = service.extract(args.article_id, new_run=args.new_run)
+            elif args.command == "retry-extraction":
+                result = service.retry(args.task_id)
+            elif args.command == "extraction-detail":
+                result = service.detail(args.task_id)
+            else:
+                result = service.status(limit=args.limit, offset=args.offset)
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return (
+                0
+                if args.command in {"extraction-detail", "extraction-status"}
+                or result["status"] == "completed"
+                else 1
+            )
+        except (StorageError, sqlite3.Error, OSError, ValueError) as error:
+            print(f"Extraction operation failed: {error}", file=sys.stderr)
+            return 1
 
     if args.command in {
         "import-article",

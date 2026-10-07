@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "qwen-eval-injection",
+    "name": "Synthetic eval-injection publisher",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/eval-injection",
+  "file": "eval-injection.html",
+  "sha256": "644243ecace21fdafc587d55e38f3f21bf1be92ec553621beaea3deffcc0bbb6",
+  "captured_at": "2026-10-07T13:26:16.020022+00:00",
+  "media_type": "text/html"
+}

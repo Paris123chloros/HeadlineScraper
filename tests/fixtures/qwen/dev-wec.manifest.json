@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "qwen-dev-wec",
+    "name": "Synthetic dev-wec publisher",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/dev-wec",
+  "file": "dev-wec.html",
+  "sha256": "05410499edc6f975d2f0e8200f87cd5d1fd2afba6e5368a5d952e8fd237bda10",
+  "captured_at": "2026-10-07T13:26:16.016958+00:00",
+  "media_type": "text/html"
+}

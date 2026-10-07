@@ -13,8 +13,11 @@ classifications, published F1 standings, reviewed FIA notices, and decision
 revisions retain their source evidence. Live collection and normalization are
 verified for representative official results from each series. Articles retain
 readable bodies with exact source spans, uncertain dates, topic/identity hints,
-rumor/opinion labels, revisions and copy hints. Qwen inference, event grouping,
-scheduling, the event feed, and reports are the next development segments.
+rumor/opinion labels, revisions and copy hints. Phase six adds bounded local Qwen
+extraction, exact evidence validation, durable pending work and evaluation
+artifacts. Extracted claims remain unassessed and require review. Real Qwen
+accuracy and throughput on the user's machine remain pending; event grouping,
+scheduling, the event feed, and reports remain subsequent segments.
 
 - [Windows Docker and development guide](docs/DEVELOPMENT.md): setup, native Ollama
   connectivity, configuration, CLI commands, and tests.
@@ -31,6 +34,8 @@ scheduling, the event feed, and reports are the next development segments.
   when the user can access their machine.
 - [Article preparation](docs/ARTICLES.md): explicit article collection, parsing,
   source spans, filtering, uncertainty, copies and revisions.
+- [Local Qwen extraction](docs/QWEN_EXTRACTION.md): inference, evidence checks,
+  retries, model provenance and local evaluation.
 
 ## Original Selenium prototype
 

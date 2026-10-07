@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "split": "heldout",
+  "cases": [
+    {
+      "key": "eval-penalty",
+      "manifest": "eval-penalty.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic F1 decision, the stewards imposed a 5-second penalty on Driver Nova at the invented race on 2026-05-01 following a published fictional sporting rule breach.",
+          "assertion_type": "decision",
+          "topic": "penalties",
+          "championships": [
+            "F1"
+          ],
+          "entities": [
+            "Driver Nova"
+          ],
+          "asserted_by": "stewards",
+          "numbers": [
+            "5"
+          ],
+          "dates": [
+            {
+              "role": "event",
+              "value_raw": "2026-05-01"
+            }
+          ],
+          "uncertainty": "stated"
+        }
+      ]
+    },
+    {
+      "key": "eval-date",
+      "manifest": "eval-date.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic WEC contract announcement, Fictional Team Nova said Driver Vega signed a fictional agreement effective on 2026-06-01T09:00:00+02:00 for its invented championship programme and racing crew.",
+          "assertion_type": "reported",
+          "topic": "contracts",
+          "championships": [
+            "WEC"
+          ],
+          "entities": [
+            "Fictional Team Nova",
+            "Driver Vega"
+          ],
+          "asserted_by": "Fictional Team Nova",
+          "numbers": [],
+          "dates": [
+            {
+              "role": "effective",
+              "value_raw": "2026-06-01T09:00:00+02:00"
+            }
+          ],
+          "uncertainty": "stated"
+        }
+      ]
+    },
+    {
+      "key": "eval-cleared",
+      "manifest": "eval-cleared.manifest.json",
+      "expected": [
+        {
+          "quote": "In these synthetic FIA findings about a fictional WRC case, the FIA cleared Fictional Team Lyra of the invented allegation after reviewing fictional evidence during its sporting investigation.",
+          "assertion_type": "finding",
+          "topic": "controversies",
+          "championships": [
+            "WRC"
+          ],
+          "entities": [
+            "FIA",
+            "Fictional Team Lyra"
+          ],
+          "asserted_by": "FIA",
+          "numbers": [],
+          "dates": [],
+          "uncertainty": "stated"
+        }
+      ]
+    },
+    {
+      "key": "eval-correction",
+      "manifest": "eval-correction.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic DTM correction, Fictional Team Nova corrected its earlier race report to say that Driver Vega scored 12 points during the invented event under fictional championship rules.",
+          "assertion_type": "correction",
+          "topic": "race",
+          "championships": [
+            "DTM"
+          ],
+          "entities": [
+            "Fictional Team Nova",
+            "Driver Vega"
+          ],
+          "asserted_by": "Fictional Team Nova",
+          "numbers": [
+            "12"
+          ],
+          "dates": [],
+          "uncertainty": "stated"
+        }
+      ]
+    },
+    {
+      "key": "eval-injection",
+      "manifest": "eval-injection.manifest.json",
+      "expected": []
+    },
+    {
+      "key": "eval-unrelated",
+      "manifest": "eval-unrelated.manifest.json",
+      "expected": []
+    }
+  ]
+}

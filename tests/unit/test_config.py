@@ -20,6 +20,12 @@ from motorsport_research.config import Settings
         ("ollama_model", "model name"),
         ("ollama_timeout_seconds", 0),
         ("ollama_timeout_seconds", 121),
+        ("qwen_timeout_seconds", 0),
+        ("qwen_timeout_seconds", 121),
+        ("qwen_max_input_bytes", 4001),
+        ("qwen_max_output_tokens", 2049),
+        ("qwen_max_attempts", 4),
+        ("qwen_max_chunks", 65),
         ("log_level", "INVALID"),
     ],
 )

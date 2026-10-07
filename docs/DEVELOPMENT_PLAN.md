@@ -6,7 +6,11 @@ FIA notices and decision revisions retain evidence. See
 [official record usage and coverage limits](OFFICIAL_RECORDS.md) and
 [validation results](VALIDATION.md). Articles now retain readable bodies with
 source spans, hints, uncertainty, genre labels and copy candidates; see
-[article usage and limits](ARTICLES.md). Phase six is next: local Qwen extraction.
+[article usage and limits](ARTICLES.md). Phase six software is implemented:
+[local Qwen extraction](QWEN_EXTRACTION.md) retains validated source selections,
+pending work and evaluation artifacts. Its acceptance gate remains open until
+real local inference accuracy and throughput have been reviewed. Phase seven,
+event grouping and corroboration, is the next implementation segment.
 Automatic source discovery, event grouping, scheduling,
 and reporting remain in the backlog. Windows Docker Desktop and the user's
 installed Qwen model remain pending local validation; remind the user at their

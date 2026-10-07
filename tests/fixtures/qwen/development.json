@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "split": "development",
+  "cases": [
+    {
+      "key": "dev-f1",
+      "manifest": "dev-f1.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic F1 race report, Driver Atlas scored 25 points after winning a fictional race against a field of invented drivers at an imaginary circuit.",
+          "assertion_type": "reported",
+          "topic": "race",
+          "championships": [
+            "F1"
+          ],
+          "entities": [
+            "Driver Atlas"
+          ],
+          "asserted_by": null,
+          "numbers": [
+            "25"
+          ],
+          "dates": [],
+          "uncertainty": "stated"
+        }
+      ]
+    },
+    {
+      "key": "dev-wec",
+      "manifest": "dev-wec.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic WEC announcement, Team Orion announced that Driver Atlas signed a 2-year contract to join its fictional crew for an invented championship campaign.",
+          "assertion_type": "reported",
+          "topic": "contracts",
+          "championships": [
+            "WEC"
+          ],
+          "entities": [
+            "Team Orion",
+            "Driver Atlas"
+          ],
+          "asserted_by": "Team Orion",
+          "numbers": [
+            "2"
+          ],
+          "dates": [],
+          "uncertainty": "stated"
+        }
+      ]
+    },
+    {
+      "key": "dev-wrc",
+      "manifest": "dev-wrc.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic WRC rumor, Driver Lyra could sign with Team Orion according to an unconfirmed report about an invented driver market negotiation for next season.",
+          "assertion_type": "reported",
+          "topic": "contracts",
+          "championships": [
+            "WRC"
+          ],
+          "entities": [
+            "Driver Lyra",
+            "Team Orion"
+          ],
+          "asserted_by": null,
+          "numbers": [],
+          "dates": [],
+          "uncertainty": "uncertain"
+        }
+      ]
+    },
+    {
+      "key": "dev-dtm",
+      "manifest": "dev-dtm.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic opinion column about DTM rules, Author Orion argues that fictional race regulations should be revised before the next invented season to improve sporting safety.",
+          "assertion_type": "reported",
+          "topic": "regulations",
+          "championships": [
+            "DTM"
+          ],
+          "entities": [
+            "Author Orion"
+          ],
+          "asserted_by": "Author Orion",
+          "numbers": [],
+          "dates": [],
+          "uncertainty": "stated"
+        }
+      ]
+    },
+    {
+      "key": "dev-fia",
+      "manifest": "dev-fia.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic FIA notice, the FIA announced an investigation into alleged misconduct by Fictional Team Orion during an invented sporting event without publishing any findings about the allegation.",
+          "assertion_type": "investigation",
+          "topic": "investigations",
+          "championships": [],
+          "entities": [
+            "FIA",
+            "Fictional Team Orion"
+          ],
+          "asserted_by": "FIA",
+          "numbers": [],
+          "dates": [],
+          "uncertainty": "uncertain"
+        }
+      ]
+    },
+    {
+      "key": "dev-response",
+      "manifest": "dev-response.manifest.json",
+      "expected": [
+        {
+          "quote": "In this synthetic DTM statement, Fictional Team Vega denied an allegation of a sporting rule breach during an invented race and said that its drivers followed the fictional rules.",
+          "assertion_type": "response",
+          "topic": "controversies",
+          "championships": [
+            "DTM"
+          ],
+          "entities": [
+            "Fictional Team Vega"
+          ],
+          "asserted_by": "Fictional Team Vega",
+          "numbers": [],
+          "dates": [],
+          "uncertainty": "stated"
+        }
+      ]
+    }
+  ]
+}

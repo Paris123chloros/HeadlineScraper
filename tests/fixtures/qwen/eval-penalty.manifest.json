@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "qwen-eval-penalty",
+    "name": "Synthetic eval-penalty publisher",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/eval-penalty",
+  "file": "eval-penalty.html",
+  "sha256": "0b6fa7d309b52cc19e9b389f2e5baa7d2149715a2401e9454a8c961daf17ba8b",
+  "captured_at": "2026-10-07T13:26:16.018139+00:00",
+  "media_type": "text/html"
+}

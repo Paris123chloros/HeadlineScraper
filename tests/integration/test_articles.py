@@ -355,7 +355,7 @@ def test_upgrade_preserves_existing_phase_four_sources(tmp_path):
     initialize(tmp_path)
     with open_repository(tmp_path, read_only=True) as repo:
         assert repo._require("sources", "existing")["name"] == "Existing publisher"
-        assert repo.stats()["schema_version"] == 6
+        assert repo.stats()["schema_version"] == len(migrations())
 
 
 @pytest.mark.parametrize(

@@ -3,8 +3,10 @@
 Phases one through five implement the package, CLI, health endpoints, Ollama model
 diagnostic, migrations, evidence storage, HTTP/RSS collection, official race records
 and deterministic article preparation. Live collection is verified for all four
-series and FIA news. Qwen extraction, persistent jobs and digests are later phases.
-See [article commands and limits](ARTICLES.md).
+series and FIA news. Phase six implements bounded Qwen extraction and manual,
+restart-safe pending work; real model evaluation remains pending. Scheduling and
+digests are later phases. See [article commands and limits](ARTICLES.md) and
+[Qwen extraction and evaluation](QWEN_EXTRACTION.md).
 The Compose `worker` is currently an opt-in, one-shot diagnostic scaffold.
 See [storage commands and provenance](STORAGE.md), [source collection](COLLECTION.md), and the
 [deferred local validation checklist](LOCAL_VALIDATION.md).

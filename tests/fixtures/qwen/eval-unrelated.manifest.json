@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "qwen-eval-unrelated",
+    "name": "Synthetic eval-unrelated publisher",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/eval-unrelated",
+  "file": "eval-unrelated.html",
+  "sha256": "f3be549f28bf37460a7cc6446d7e0387e87593cd1806e094fa5a5eba035a6866",
+  "captured_at": "2026-10-07T13:26:16.020703+00:00",
+  "media_type": "text/html"
+}

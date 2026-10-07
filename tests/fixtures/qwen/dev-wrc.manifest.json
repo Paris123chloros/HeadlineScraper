@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "qwen-dev-wrc",
+    "name": "Synthetic dev-wrc publisher",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/dev-wrc",
+  "file": "dev-wrc.html",
+  "sha256": "c02e004e5f44c31a1378f28c4eb38d13e0dc25369c26f1b4c3612a07aafefeb1",
+  "captured_at": "2026-10-07T13:26:16.017147+00:00",
+  "media_type": "text/html"
+}
