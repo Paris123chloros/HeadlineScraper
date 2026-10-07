@@ -1,11 +1,13 @@
 # Motorsport research: development plan
 
-Status: phases one through four implemented for the reviewed source formats.
+Status: phases one through five implemented for the reviewed source formats.
 Official results from F1, WEC, WRC and DTM can now be collected and normalized;
 FIA notices and decision revisions retain evidence. See
 [official record usage and coverage limits](OFFICIAL_RECORDS.md) and
-[validation results](VALIDATION.md). Phase five is next: article parsing and
-relevance. Automatic source discovery, Qwen extraction, event grouping, scheduling,
+[validation results](VALIDATION.md). Articles now retain readable bodies with
+source spans, hints, uncertainty, genre labels and copy candidates; see
+[article usage and limits](ARTICLES.md). Phase six is next: local Qwen extraction.
+Automatic source discovery, event grouping, scheduling,
 and reporting remain in the backlog. Windows Docker Desktop and the user's
 installed Qwen model remain pending local validation; remind the user at their
 next local validation session using the [deferred checklist](LOCAL_VALIDATION.md).

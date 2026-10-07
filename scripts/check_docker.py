@@ -249,6 +249,36 @@ HTTPServer(('0.0.0.0', 11434), Handler).serve_forever()
             )
         )
         assert signed_trace["evidence"][0]["source_kind"] == "official"
+        run(
+            [
+                "docker",
+                "cp",
+                str(ROOT / "tests/fixtures/articles"),
+                f"{container}:/tmp/article-fixtures",
+            ]
+        )
+        article_cli = [*compose, "exec", "-T", "dashboard", "motorsport-research"]
+        article = json.loads(
+            run([*article_cli, "import-article", "/tmp/article-fixtures/race.manifest.json"])
+        )
+        repeat_article = json.loads(
+            run([*article_cli, "import-article", "/tmp/article-fixtures/race.manifest.json"])
+        )
+        assert article["article_id"] == repeat_article["article_id"]
+        assert not repeat_article["created"]
+        updated_article = json.loads(
+            run([*article_cli, "import-article", "/tmp/article-fixtures/updated.manifest.json"])
+        )
+        unrelated = json.loads(
+            run([*article_cli, "import-article", "/tmp/article-fixtures/unrelated.manifest.json"])
+        )
+        assert unrelated["outcome"] == "irrelevant"
+        history = json.loads(
+            run([*article_cli, "article-history", article["document"]["document_id"]])
+        )
+        assert [row["revision"] for row in history] == [1, 2]
+        detail = json.loads(run([*article_cli, "article-detail", updated_article["article_id"]]))
+        assert detail["evidence_verified"] and "twenty-one laps" in detail["body"]
         ports = json.loads(
             run(["docker", "inspect", "--format", "{{json .NetworkSettings.Ports}}", container])
         )
@@ -349,13 +379,20 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         wait_for_liveness()
         assert probe("/health/ollama")["http_status"] == 200
         persistent = probe("/health/storage")
-        assert persistent["body"]["counts"]["document_versions"] == 3, persistent
+        assert persistent["body"]["counts"]["document_versions"] == 6, persistent
         assert persistent["body"]["counts"]["claims"] == 22, persistent
         assert persistent["body"]["counts"]["collection_runs"] == 2, persistent
         assert persistent["body"]["counts"]["discovered_links"] == 1, persistent
         print("PASS: image CLI, Compose startup/restart, local port binding, non-root volumes")
         print("PASS: migrations, repeatable evidence import, claim trace, persistent records")
         assert persistent["body"]["counts"]["official_ingestions"] == 2, persistent
+        assert persistent["body"]["counts"]["article_parses"] == 3, persistent
+        assert persistent["body"]["counts"]["article_attempts"] == 4, persistent
+        restored = json.loads(run([*article_cli, "article-detail", article["article_id"]]))
+        assert restored["evidence_verified"] and "twenty laps" in restored["body"]
+        print(
+            "PASS: article parsing/replay, revision history, irrelevant status and persistent spans"
+        )
         print("PASS: official FIA PDF classification, replay, evidence and persistent history")
         print("PASS: packaged catalogue, HTTP collection, conditional 304, persistent history")
         print("PASS: Ollama offline, installed-tag fixture, and missing-tag diagnostic exit code")

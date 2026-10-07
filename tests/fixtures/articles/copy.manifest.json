@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "synthetic-copy",
+    "name": "Synthetic copy publisher",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/articles/copy",
+  "file": "copy.html",
+  "sha256": "b2d16e2cb68f918b0e2207feeeb976191bcc7ca4657ca11c8d0008261edcd07d",
+  "captured_at": "2026-10-07T12:21:43.944171+00:00",
+  "media_type": "text/html"
+}

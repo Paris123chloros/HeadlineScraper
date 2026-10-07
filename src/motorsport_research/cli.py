@@ -32,6 +32,31 @@ def main(argv: Sequence[str] | None = None) -> int:
     fixture.add_argument("path", help="JSON file path, or - to read stdin")
     trace = commands.add_parser("trace-claim", help="Show and verify a claim's source evidence")
     trace.add_argument("claim_id")
+    article_import = commands.add_parser(
+        "import-article", help="Archive and parse an article manifest"
+    )
+    article_import.add_argument("path", type=Path)
+    article_parse = commands.add_parser("parse-article", help="Parse an archived article version")
+    article_parse.add_argument("document_version_id")
+    article_parse.add_argument("--encoding", default="utf-8")
+    article_collect = commands.add_parser(
+        "collect-article", help="Fetch an explicit approved article URL and parse it"
+    )
+    article_collect.add_argument("--source", required=True)
+    article_collect.add_argument("--url", required=True)
+    article_collect.add_argument("--catalogue", type=Path)
+    article_collect.add_argument("--force", action="store_true")
+    article_detail = commands.add_parser(
+        "article-detail", help="Inspect article and verify source spans"
+    )
+    article_detail.add_argument("article_id")
+    article_history = commands.add_parser(
+        "article-history", help="Inspect article document revisions"
+    )
+    article_history.add_argument("document_id")
+    article_status = commands.add_parser("article-status", help="Inspect article parsing attempts")
+    article_status.add_argument("--limit", type=int, default=50)
+    article_status.add_argument("--offset", type=int, default=0)
     official = commands.add_parser(
         "import-official", help="Import a reviewed official archive manifest"
     )
@@ -84,6 +109,45 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(str(error), file=sys.stderr)
         return 2
     configure_logging(settings.log_level)
+
+    if args.command in {
+        "import-article",
+        "collect-article",
+        "parse-article",
+        "article-detail",
+        "article-history",
+        "article-status",
+    }:
+        from motorsport_research.extraction.service import ArticleService
+        from motorsport_research.sources.catalogue import CatalogueError, load_catalogue
+
+        try:
+            service = ArticleService(settings.data_dir)
+            if args.command == "import-article":
+                result = service.import_manifest(args.path)
+            elif args.command == "collect-article":
+                catalogue = load_catalogue(args.catalogue or settings.source_catalogue)
+                result = service.collect_article(catalogue, args.source, args.url, force=args.force)
+            elif args.command == "parse-article":
+                result = service.parse(args.document_version_id, encoding=args.encoding)
+            elif args.command == "article-detail":
+                result = service.detail(args.article_id)
+            elif args.command == "article-history":
+                result = service.history(args.document_id)
+            else:
+                result = service.status(limit=args.limit, offset=args.offset)
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            outcome = result.get("outcome", "relevant") if isinstance(result, dict) else "relevant"
+            return 0 if outcome in {"relevant", "irrelevant", "not_due", "disabled"} else 1
+        except ValidationError:
+            print("Invalid article manifest; check the documented schema.", file=sys.stderr)
+            return 2
+        except CatalogueError as error:
+            print(f"Catalogue error: {error}", file=sys.stderr)
+            return 2
+        except (StorageError, sqlite3.Error, OSError, ValueError) as error:
+            print(f"Article operation failed: {error}", file=sys.stderr)
+            return 1
 
     if args.command == "config":
         print(json.dumps(settings.model_dump(mode="json"), indent=2))

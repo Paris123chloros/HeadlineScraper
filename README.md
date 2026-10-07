@@ -6,13 +6,15 @@ scandal/controversy reporting into sourced events and automated English digests.
 It connects to the existing native Windows Ollama app with configurable
 `qwen3.5-instruct:4b`. The user's Docker-hosted Odysseus remains a separate interface.
 
-Phases one through four provide local Docker startup, evidence storage, bounded
-HTTP/RSS collection, and official-result parsers for all four series. Structured
+Phases one through five provide local Docker startup, evidence storage, bounded
+HTTP/RSS collection, official-result parsers and article preparation for all four
+series. Structured
 classifications, published F1 standings, reviewed FIA notices, and decision
 revisions retain their source evidence. Live collection and normalization are
-verified for representative official results from each series. Article extraction,
-Qwen inference, event grouping, scheduling, the event feed, and reports are the
-next development segments.
+verified for representative official results from each series. Articles retain
+readable bodies with exact source spans, uncertain dates, topic/identity hints,
+rumor/opinion labels, revisions and copy hints. Qwen inference, event grouping,
+scheduling, the event feed, and reports are the next development segments.
 
 - [Windows Docker and development guide](docs/DEVELOPMENT.md): setup, native Ollama
   connectivity, configuration, CLI commands, and tests.
@@ -27,6 +29,8 @@ next development segments.
   and current coverage limits.
 - [Deferred local checks](docs/LOCAL_VALIDATION.md): Windows/Ollama checks to revisit
   when the user can access their machine.
+- [Article preparation](docs/ARTICLES.md): explicit article collection, parsing,
+  source spans, filtering, uncertainty, copies and revisions.
 
 ## Original Selenium prototype
 

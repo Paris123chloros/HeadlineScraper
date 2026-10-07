@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "motorsport-f1",
+    "name": "Motorsport.com F1 feed",
+    "url": "https://www.motorsport.com/",
+    "kind": "independent"
+  },
+  "url": "https://www.motorsport.com/dakar/news/fernando-alonso-to-contest-dakar-rally-with-aston-martin/10862699/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www",
+  "file": "captured-f1.html",
+  "sha256": "ae08b8bb5bb17ed5a1efd7acb8828ca9a8a369ed7684ed48c49c93567b42ac12",
+  "captured_at": "2026-10-07T12:19:22.679188+00:00",
+  "media_type": "text/html"
+}

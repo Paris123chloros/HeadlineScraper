@@ -42,6 +42,8 @@ COUNT_TABLES = (
     "collection_requests",
     "discovered_links",
     "official_ingestions",
+    "article_parses",
+    "article_attempts",
 )
 
 

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "synthetic-articles",
+    "name": "Synthetic article fixtures",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/articles/unrelated",
+  "file": "unrelated.html",
+  "sha256": "222906605b621008a6736871b92f180b73adbf31c2b7e797be617a3440ae3e8b",
+  "captured_at": "2026-10-07T12:21:43.944839+00:00",
+  "media_type": "text/html"
+}
