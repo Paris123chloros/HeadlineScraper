@@ -1,0 +1,12 @@
+{
+  "fixture_kind": "synthetic; never downloaded from the attributed endpoints",
+  "simulated_retrieved_at": "2026-01-01T12:00:00Z",
+  "cases": [
+    {"source_key": "f1-official", "source_url": "https://www.formula1.com/en/latest", "file": "page.html", "media_type": "text/html", "expected": "success"},
+    {"source_key": "wec-official", "source_url": "https://www.fiawec.com/en/news", "file": "page.html", "media_type": "text/html", "expected": "success"},
+    {"source_key": "wrc-official", "source_url": "https://www.wrc.com/en/news", "file": "page.html", "media_type": "text/html", "expected": "success"},
+    {"source_key": "motorsport-dtm", "source_url": "https://www.motorsport.com/rss/dtm/news/", "file": "rss.xml", "media_type": "application/rss+xml", "expected": "success"},
+    {"source_key": "fia-news", "source_url": "https://www.fia.com/news", "file": "page.html", "media_type": "text/html", "expected": "success"},
+    {"source_key": "motorsport-f1", "source_url": "https://www.motorsport.com/rss/f1/news/", "file": "rss.xml", "media_type": "application/rss+xml", "expected": "success"}
+  ]
+}

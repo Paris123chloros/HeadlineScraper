@@ -1,7 +1,10 @@
 # Motorsport research: development plan
 
-Status: phase-one foundations and phase-two persistence implemented; collection,
-race-data extraction, event processing, and reporting remain in the backlog. See
+Status: phases one through three implemented. Live source collection is verified
+for all four series and FIA news; DTM uses an independent feed while its official
+index awaits an adapter.
+See [collection usage and limitations](COLLECTION.md). Race-data extraction,
+event processing, and reporting remain in the backlog. See
 [development and local startup](DEVELOPMENT.md) for the current workflow and
 validation boundaries, and [validation results](VALIDATION.md) for checks actually
 performed. Windows Docker Desktop and the user's installed Qwen model remain

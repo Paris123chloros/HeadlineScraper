@@ -10,6 +10,7 @@ x-application: &application
     REPORT_TIMEZONE: ${REPORT_TIMEZONE:-Europe/Athens}
     LOG_LEVEL: ${LOG_LEVEL:-INFO}
     DATA_DIR: /data
+    SOURCE_CATALOGUE: /app/config/sources.yaml
   volumes:
     - research-data:/data
     - source-documents:/data/documents

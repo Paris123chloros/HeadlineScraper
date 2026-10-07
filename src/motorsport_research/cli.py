@@ -32,6 +32,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     fixture.add_argument("path", help="JSON file path, or - to read stdin")
     trace = commands.add_parser("trace-claim", help="Show and verify a claim's source evidence")
     trace.add_argument("claim_id")
+    sources = commands.add_parser("sources", help="Inspect configured sources without fetching")
+    status = commands.add_parser(
+        "collection-status", help="Inspect collection outcomes and coverage"
+    )
+    history = commands.add_parser(
+        "collection-history", help="Inspect a source's attempts and configuration"
+    )
+    history.add_argument("source")
+    collect = commands.add_parser(
+        "collect", help="Collect enabled or explicitly selected sources once"
+    )
+    collect.add_argument("--source", action="append", help="Source key; repeat to select several")
+    collect.add_argument(
+        "--force",
+        action="store_true",
+        help="Ignore refresh interval, retaining host pacing and retry limits",
+    )
+    for command in (sources, status, history, collect):
+        command.add_argument("--catalogue", type=Path, help="Override SOURCE_CATALOGUE")
     serve = commands.add_parser("serve", help="Start the local foundation web application")
     serve.add_argument("--host", default="127.0.0.1")
     serve.add_argument("--port", type=int, default=8000)
@@ -53,6 +72,35 @@ def main(argv: Sequence[str] | None = None) -> int:
         status = check_ollama(settings)
         print(status.model_dump_json(indent=2))
         return 0 if status.status == "ready" else 1
+
+    if args.command in {"sources", "collect", "collection-status", "collection-history"}:
+        from motorsport_research.sources.catalogue import CatalogueError, load_catalogue
+        from motorsport_research.sources.collector import SUCCESS, Collector
+        from motorsport_research.sources.store import CollectionStore
+
+        try:
+            catalogue = load_catalogue(args.catalogue or settings.source_catalogue)
+            if args.command == "sources":
+                result = catalogue.model_dump(mode="json")
+            elif args.command == "collect":
+                result = Collector(settings.data_dir).collect(
+                    catalogue, args.source, force=args.force
+                )
+                print(json.dumps(result, indent=2, ensure_ascii=False))
+                return 0 if all(item["outcome"] in SUCCESS for item in result) else 1
+            elif args.command == "collection-history":
+                catalogue.select([args.source])
+                result = CollectionStore(settings.data_dir).history(args.source)
+            else:
+                result = CollectionStore(settings.data_dir).status(catalogue)
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return 0
+        except CatalogueError as error:
+            print(f"Catalogue error: {error}", file=sys.stderr)
+            return 2
+        except (StorageError, sqlite3.Error, OSError, ValueError) as error:
+            print(f"Collection operation failed: {error}", file=sys.stderr)
+            return 1
 
     if args.command in {"db-init", "storage-status", "import-fixture", "trace-claim"}:
         try:

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://example.invalid/announcements/">
+<title>Synthetic FIA-style announcements</title>
+<entry><title>Fictional governance notice</title><id>synthetic:notice</id>
+<link rel="self" href="notice.xml"/><link rel="alternate" href="notice"/>
+<published>2026-01-01T11:00:00Z</published>
+<summary>Fictional organization-wide notice. No championship scope is asserted.</summary></entry>
+</feed>

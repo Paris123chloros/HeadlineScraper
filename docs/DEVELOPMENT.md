@@ -1,10 +1,11 @@
 # Development and local startup
 
-Phases one and two implement the package, configuration, CLI, health endpoints,
-Ollama model diagnostic, migrations, and versioned evidence storage. Collection,
-race-data extraction, persistent job execution, and digests are later phases.
+Phases one through three implement the package, configuration, CLI, health endpoints,
+Ollama model diagnostic, migrations, versioned evidence storage, and HTTP/RSS
+collection. Live collection is verified for all four series and FIA news. Race-data
+extraction, persistent job execution, and digests are later phases.
 The Compose `worker` is currently an opt-in, one-shot diagnostic scaffold.
-See [storage commands and provenance](STORAGE.md) and the
+See [storage commands and provenance](STORAGE.md), [source collection](COLLECTION.md), and the
 [deferred local validation checklist](LOCAL_VALIDATION.md).
 
 ## Windows Docker Desktop setup
@@ -129,7 +130,8 @@ python scripts/check_docker.py
 ```
 
 It checks real container startup/restart, loopback-only port binding, writable
-non-root volumes, and installed/missing/offline model diagnostics. It does not
+non-root volumes, installed/missing/offline model diagnostics, and real HTTP feed
+collection/conditional caching against a synthetic server. It does not
 connect to or modify your native Ollama or Odysseus installation, and does not
 validate real inference. The fixture overrides host-name routing only for its
 isolated test services; it does not exercise Windows host forwarding.
@@ -158,6 +160,7 @@ reach Windows; `localhost` inside the container refers to that container itself.
 | `OLLAMA_TIMEOUT_SECONDS` | `5` | Positive HTTP timeout, at most 120 seconds |
 | `REPORT_TIMEZONE` | `Europe/Athens` | Valid IANA timezone; reports arrive in a later phase |
 | `LOG_LEVEL` | `INFO` | Case-insensitive standard log level |
+| `SOURCE_CATALOGUE` | `config/sources.yaml` natively | Compose uses `/app/config/sources.yaml`; collection commands accept `--catalogue PATH` |
 | `DATA_DIR` | `data` natively, `/data` in Docker | Reserved persistent storage root |
 | `DASHBOARD_PORT` | `8000` | Host port bound to `127.0.0.1` by Compose |
 
