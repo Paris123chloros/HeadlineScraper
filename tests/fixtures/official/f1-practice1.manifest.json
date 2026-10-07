@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provenance": "excerpt",
+  "source": {
+    "key": "f1-official-results",
+    "name": "Formula 1 official results",
+    "url": "https://www.formula1.com/",
+    "kind": "official"
+  },
+  "url": "https://www.formula1.com/en/results/2024/races/1229/bahrain/practice/1",
+  "file": "f1-practice1.html",
+  "sha256": "5c7cfe97e386623758b6e1eca97cffe23eb6eced85b6cd59ad32e5ef6e1b840e",
+  "captured_at": "2026-10-07T10:01:43.578071+00:00",
+  "media_type": "text/html",
+  "context": {
+    "kind": "classification",
+    "adapter": "f1-html",
+    "championship": "F1",
+    "season": 2024,
+    "meeting_key": "bahrain",
+    "meeting_name": "Bahrain Grand Prix",
+    "session": "practice",
+    "session_number": 1,
+    "expected_entries": 20,
+    "context_quote": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2024 - PRACTICE 1"
+  },
+  "original_sha256": "7940e2ee57921aa6bfe392eacf60f80aafd5eb4da57f32d672e31e978cb4fdd6"
+}

@@ -198,6 +198,57 @@ HTTPServer(('0.0.0.0', 11434), Handler).serve_forever()
         assert offline["body"]["reachable"] is False, offline
 
         container = run([*compose, "ps", "--quiet", "dashboard"]).strip()
+        run(
+            [
+                "docker",
+                "cp",
+                str(ROOT / "tests/fixtures/official"),
+                f"{container}:/tmp/official-fixtures",
+            ]
+        )
+        official_import = [
+            *compose,
+            "exec",
+            "-T",
+            "dashboard",
+            "motorsport-research",
+            "import-official",
+            "/tmp/official-fixtures/fia-f1-final.manifest.json",
+        ]
+        official = json.loads(run(official_import))
+        official_repeat = json.loads(run(official_import))
+        assert official["record"]["version_id"] == official_repeat["record"]["version_id"]
+        assert not official_repeat["record"]["created"]
+        assert len(official["claim_ids"]) == 20
+        classification = json.loads(
+            run(
+                [
+                    *compose,
+                    "exec",
+                    "-T",
+                    "dashboard",
+                    "motorsport-research",
+                    "record-history",
+                    official["record"]["record_id"],
+                ]
+            )
+        )
+        assert classification[0]["payload"]["state"] == "final"
+        assert classification[0]["payload"]["rows"][10]["gap_raw"] == "1 LAP"
+        signed_trace = json.loads(
+            run(
+                [
+                    *compose,
+                    "exec",
+                    "-T",
+                    "dashboard",
+                    "motorsport-research",
+                    "trace-claim",
+                    official["claim_ids"][0],
+                ]
+            )
+        )
+        assert signed_trace["evidence"][0]["source_kind"] == "official"
         ports = json.loads(
             run(["docker", "inspect", "--format", "{{json .NetworkSettings.Ports}}", container])
         )
@@ -298,12 +349,14 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         wait_for_liveness()
         assert probe("/health/ollama")["http_status"] == 200
         persistent = probe("/health/storage")
-        assert persistent["body"]["counts"]["document_versions"] == 2, persistent
-        assert persistent["body"]["counts"]["claims"] == 2, persistent
+        assert persistent["body"]["counts"]["document_versions"] == 3, persistent
+        assert persistent["body"]["counts"]["claims"] == 22, persistent
         assert persistent["body"]["counts"]["collection_runs"] == 2, persistent
         assert persistent["body"]["counts"]["discovered_links"] == 1, persistent
         print("PASS: image CLI, Compose startup/restart, local port binding, non-root volumes")
         print("PASS: migrations, repeatable evidence import, claim trace, persistent records")
+        assert persistent["body"]["counts"]["official_ingestions"] == 2, persistent
+        print("PASS: official FIA PDF classification, replay, evidence and persistent history")
         print("PASS: packaged catalogue, HTTP collection, conditional 304, persistent history")
         print("PASS: Ollama offline, installed-tag fixture, and missing-tag diagnostic exit code")
         print("Synthetic host routing only; Windows host forwarding and inference are unverified.")

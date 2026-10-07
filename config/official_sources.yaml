@@ -1,0 +1,172 @@
+schema_version: 1
+sources:
+- key: f1-official-results
+  name: Formula 1 official results
+  homepage: https://www.formula1.com/
+  url: https://www.formula1.com/en/results/2024/races/1229/bahrain/race-result
+  kind: official
+  role: championship
+  publisher: Formula 1 official results
+  championships:
+  - F1
+  topics:
+  - results
+  - penalties
+  method: http
+  availability: usable
+  notes: Reviewed explicit result endpoint; normalization requires the separate session
+    context. Manual collection only.
+  enabled: true
+  max_bytes: 2097152
+- key: wec-official-timing
+  name: WEC official timing (Alkamel)
+  homepage: https://fiawec.alkamelsystems.com/
+  url: https://fiawec.alkamelsystems.com/Results/15_2026/06_FUJI%20SPEEDWAY/679_FIA%20WEC/202609271100_Race/06_Hour%206/03_Classification_Race_Hour%206_Final.CSV
+  kind: official
+  role: championship
+  publisher: WEC official timing (Alkamel)
+  championships:
+  - WEC
+  topics:
+  - results
+  - penalties
+  method: http
+  availability: usable
+  notes: Reviewed explicit result endpoint; normalization requires the separate session
+    context. Manual collection only.
+  enabled: true
+  max_bytes: 2097152
+- key: dtm-official-results
+  name: DTM official results API
+  homepage: https://api.dtm.com/
+  url: https://api.dtm.com/data?query=wigeResults&raceSeries=DTM&startDate=2026-04-24&endDate=2026-04-26&lang=en
+  kind: official
+  role: championship
+  publisher: DTM official results API
+  championships:
+  - DTM
+  topics:
+  - results
+  - penalties
+  method: http
+  availability: usable
+  notes: Reviewed explicit result endpoint; normalization requires the separate session
+    context. Manual collection only.
+  enabled: true
+  max_bytes: 2097152
+- key: wrc-api-event
+  name: WRC official API event
+  homepage: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/
+  url: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/api/events/635.json
+  kind: official
+  role: championship
+  publisher: WRC official public results service
+  championships:
+  - WRC
+  topics:
+  - results
+  - penalties
+  method: http
+  availability: usable
+  notes: Exact public endpoint used by WRC results. Build an evidence archive from
+    these components before normalization.
+  enabled: true
+- key: wrc-api-entries
+  name: WRC official API entries
+  homepage: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/
+  url: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/api/events/635/rallies/703/entries.json
+  kind: official
+  role: championship
+  publisher: WRC official public results service
+  championships:
+  - WRC
+  topics:
+  - results
+  - penalties
+  method: http
+  availability: usable
+  notes: Exact public endpoint used by WRC results. Build an evidence archive from
+    these components before normalization.
+  enabled: true
+- key: wrc-api-results
+  name: WRC official API results
+  homepage: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/
+  url: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/api/events/635/rallies/703/results.json
+  kind: official
+  role: championship
+  publisher: WRC official public results service
+  championships:
+  - WRC
+  topics:
+  - results
+  - penalties
+  method: http
+  availability: usable
+  notes: Exact public endpoint used by WRC results. Build an evidence archive from
+    these components before normalization.
+  enabled: true
+- key: wrc-api-retirements
+  name: WRC official API retirements
+  homepage: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/
+  url: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/api/events/635/retirements.json
+  kind: official
+  role: championship
+  publisher: WRC official public results service
+  championships:
+  - WRC
+  topics:
+  - results
+  - penalties
+  method: http
+  availability: usable
+  notes: Exact public endpoint used by WRC results. Build an evidence archive from
+    these components before normalization.
+  enabled: true
+- key: wec-class-results
+  name: WEC official class results
+  homepage: https://www.fiawec.com/
+  url: https://www.fiawec.com/en/page/resultats-1
+  kind: official
+  role: championship
+  publisher: FIA WEC
+  championships:
+  - WEC
+  topics:
+  - results
+  method: http
+  availability: usable
+  enabled: true
+  notes: Dynamic latest-event default; collect explicitly, review its selected class
+    and compare CSV laps/time before bundle-wec. Default captured class is Hypercar.
+- key: wrc-api-stages
+  name: WRC official API stages
+  homepage: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/
+  url: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/api/events/635/stages.json
+  kind: official
+  role: championship
+  publisher: WRC official public results service
+  championships:
+  - WRC
+  topics:
+  - results
+  method: http
+  availability: usable
+  enabled: true
+  notes: Explicit final-stage reference; select manually and use the reviewed stage-17
+    context. Stage results use stagetimes, not cumulative results.
+- key: wrc-api-stagetimes
+  name: WRC official API stagetimes
+  homepage: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/
+  url: https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/api/events/635/stages/10417/stagetimes.json?rallyId=703
+  kind: official
+  role: championship
+  publisher: WRC official public results service
+  championships:
+  - WRC
+  topics:
+  - results
+  method: http
+  availability: usable
+  enabled: true
+  notes: Explicit final-stage reference; select manually and use the reviewed stage-17
+    context. Stage results use stagetimes, not cumulative results.

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "official-synthetic-tests",
+    "name": "Synthetic sporting records (not real events)",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/fia-rule-synthetic",
+  "file": "fia-rule-synthetic.txt",
+  "sha256": "6feb070c4857208ddbfb743eee70471d7b13d66b73610f1cfadfd7b8c22c3ddf",
+  "captured_at": "2026-10-07T10:16:36.642567+00:00",
+  "media_type": "text/plain",
+  "context": {
+    "kind": "announcement",
+    "adapter": "fia-notice",
+    "key": "fia-rule-synthetic",
+    "title_quote": "Synthetic rule change",
+    "issuer": "Synthetic FIA fixture",
+    "jurisdiction": "Synthetic fixture only",
+    "championships": [
+      "F1"
+    ],
+    "notice_type": "regulation_change",
+    "statement": {
+      "quote": "The revised rule applies from 1 January 2027."
+    },
+    "effective_date": "2027-01-01",
+    "effective_date_quote": "The revised rule applies from 1 January 2027."
+  }
+}

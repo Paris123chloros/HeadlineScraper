@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "fia-official-records",
+    "name": "FIA official records",
+    "url": "https://www.fia.com/",
+    "kind": "official"
+  },
+  "url": "https://www.fia.com/news/fia-formula-2-and-formula-3-championships-announce-2027-calendars",
+  "file": "fia-calendar.html",
+  "sha256": "b826bd47e711603d0afa6e51790bb3a15e29eb402c60f01adf64080c41d0820c",
+  "captured_at": "2026-10-07T10:20:30.889595+00:00",
+  "media_type": "text/html",
+  "context": {
+    "kind": "announcement",
+    "adapter": "fia-notice",
+    "key": "f2-f3-calendars-2027",
+    "title_quote": "FIA Formula 2 and Formula 3 Championships announce 2027 calendars",
+    "title_start_offset": 7250,
+    "issuer": "FIA",
+    "jurisdiction": "FIA Formula 2 and Formula 3 championships",
+    "championships": [],
+    "notice_type": "calendar_change",
+    "statement": {
+      "quote": "The FIA Formula 2 and FIA Formula 3 Championships have announced their respective 2027 calendars, featuring a combined 14 Formula 2 and 10 Formula 3 rounds across four continents, with several new venues and major milestones for both categories."
+    }
+  }
+}

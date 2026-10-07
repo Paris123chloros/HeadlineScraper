@@ -13,7 +13,7 @@ from pydantic import AnyHttpUrl
 
 from motorsport_research.storage.models import canonical_url, timestamp
 
-PARSER_VERSION = "collection:1"
+PARSER_VERSION = "collection:2"
 
 
 class CollectionError(ValueError):
@@ -188,13 +188,29 @@ def parse_document(
         }:
             raise CollectionError("unsupported_format", "Expected an XML feed content type")
         return parse_feed(content, url)
+    if media_type in {"application/json", "text/csv", "application/csv"}:
+        try:
+            text = content.decode("utf-8-sig")
+            if media_type == "application/json":
+                from motorsport_research.championships.json_data import decode
+
+                decode(text)
+            if not text.strip() or "\0" in text:
+                raise ValueError("empty/invalid text")
+        except (UnicodeError, ValueError, RecursionError) as error:
+            raise CollectionError("parser_failure", "Malformed structured archive") from error
+        return ParsedDocument(
+            url,
+            text,
+            warnings=["Structured data archived; normalize with reviewed official context"],
+        )
     if media_type == "application/pdf":
         if not content.startswith(b"%PDF-"):
             raise CollectionError("parser_failure", "Response is not a PDF document")
         return ParsedDocument(
             url.rsplit("/", 1)[-1] or "PDF document",
             "",
-            warnings=["PDF archived; text parsing is phase four"],
+            warnings=["PDF archived; normalize with reviewed official context"],
         )
     if media_type not in {"text/html", "application/xhtml+xml", "text/plain"}:
         raise CollectionError("unsupported_format", "HTTP content type is not supported")

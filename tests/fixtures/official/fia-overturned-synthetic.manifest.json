@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "official-synthetic-tests",
+    "name": "Synthetic sporting records (not real events)",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/fia-overturned-synthetic",
+  "file": "fia-overturned-synthetic.txt",
+  "sha256": "23d13e1073e2c443695807948878c46e3f0daa4c6b87cab9d0fb726b519bc87e",
+  "captured_at": "2026-10-07T10:16:36.643035+00:00",
+  "media_type": "text/plain",
+  "context": {
+    "kind": "decision",
+    "adapter": "fia-notice",
+    "key": "synthetic-penalty-case",
+    "title_quote": "Synthetic appeal decision",
+    "issuer": "Synthetic FIA fixture",
+    "jurisdiction": "Synthetic fixture only",
+    "championships": [
+      "F1"
+    ],
+    "notice_type": "disciplinary_decision",
+    "statement": {
+      "quote": "The appeal succeeds and the penalty on car 8 is overturned."
+    },
+    "procedural_status": "overturned",
+    "procedural_status_evidence": {
+      "quote": "The appeal succeeds and the penalty on car 8 is overturned."
+    }
+  }
+}

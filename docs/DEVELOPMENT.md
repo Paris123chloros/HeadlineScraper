@@ -200,3 +200,11 @@ CI is configured for Python checks on Linux and Windows and an image build on
 Linux. Configuring CI is separate from observing it run. Docker Desktop networking,
 the user's installed model, and Windows startup must also be checked on the user's
 machine before those capabilities are considered verified.
+
+## Official results and FIA notices
+
+The phase-four CLI adds `import-official`, `normalize-official`, `bundle-wrc`,
+`bundle-wec`, `record-history`, and `official-status`. The image packages the
+separate `config/official_sources.yaml` catalogue and reviewed contexts in
+`config/official_contexts/`. See [the official-record guide](OFFICIAL_RECORDS.md)
+for complete Windows and Docker commands, supported formats, and evidence limits.

@@ -1,0 +1,12 @@
+{
+  "kind": "classification",
+  "adapter": "fia-f1-pdf",
+  "championship": "F1",
+  "season": 2024,
+  "meeting_key": "bahrain",
+  "meeting_name": "Bahrain Grand Prix",
+  "session": "race",
+  "session_number": 1,
+  "expected_entries": 20,
+  "context_quote": "2024 BAHRAIN GRAND PRIX"
+}

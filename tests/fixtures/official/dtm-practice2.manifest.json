@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provenance": "excerpt",
+  "source": {
+    "key": "dtm-official-results",
+    "name": "DTM official results API",
+    "url": "https://api.dtm.com/",
+    "kind": "official"
+  },
+  "url": "https://api.dtm.com/data?query=wigeResults&raceSeries=DTM&startDate=2026-01-01&endDate=2026-12-31&lang=en",
+  "file": "dtm-red-bull-ring.json",
+  "sha256": "7aff05a7deafe54e22eeef71fc6b61f68a8c7955ed986362dae1fbb37131f488",
+  "captured_at": "2026-10-07T10:08:01.205829+00:00",
+  "media_type": "application/json",
+  "context": {
+    "kind": "classification",
+    "adapter": "dtm-json",
+    "championship": "DTM",
+    "season": 2026,
+    "meeting_key": "red-bull-ring",
+    "meeting_name": "Red Bull Ring presented by VKB-Bank",
+    "session": "practice",
+    "session_number": 2,
+    "expected_entries": 21,
+    "context_quote": "Red Bull Ring presented by VKB-Bank"
+  },
+  "original_sha256": "fc1150913fc18003886960b0cf74ce72be3e176862f7284e66d81b663c4123de"
+}

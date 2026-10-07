@@ -1,0 +1,14 @@
+{
+  "kind": "classification",
+  "adapter": "wec-class-bundle",
+  "championship": "WEC",
+  "season": 2026,
+  "meeting_key": "fuji",
+  "meeting_name": "6 Hours of Fuji",
+  "session": "race",
+  "session_number": 1,
+  "category_scope": "HYPERCAR",
+  "expected_entries": 17,
+  "event_date": null,
+  "context_quote": "06_FUJI SPEEDWAY"
+}

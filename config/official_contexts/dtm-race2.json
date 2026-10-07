@@ -1,0 +1,12 @@
+{
+  "kind": "classification",
+  "adapter": "dtm-json",
+  "championship": "DTM",
+  "season": 2026,
+  "meeting_key": "red-bull-ring",
+  "meeting_name": "Red Bull Ring presented by VKB-Bank",
+  "session": "race",
+  "session_number": 2,
+  "expected_entries": 21,
+  "context_quote": "Red Bull Ring presented by VKB-Bank"
+}

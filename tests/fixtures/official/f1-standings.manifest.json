@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "provenance": "excerpt",
+  "source": {
+    "key": "f1-official-results",
+    "name": "Formula 1 official results",
+    "url": "https://www.formula1.com/",
+    "kind": "official"
+  },
+  "url": "https://www.formula1.com/en/results/2024/drivers",
+  "file": "f1-standings.html",
+  "sha256": "5a42c7bb6b58f3de9a9b5d165af858c04972c3ad4d026494869caae9f54f73bd",
+  "captured_at": "2026-10-07T09:58:23.816001+00:00",
+  "media_type": "text/html",
+  "context": {
+    "kind": "standings",
+    "adapter": "f1-standings-html",
+    "season": 2024,
+    "category": "drivers",
+    "expected_entries": 24,
+    "context_quote": "2024 Drivers' Standings"
+  },
+  "original_sha256": "ba46b500fb908acb7b17d192a759529398acde82a921feeeb318a2004ccafafb"
+}

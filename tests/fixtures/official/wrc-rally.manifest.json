@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "wrc-official-results",
+    "name": "WRC official public results service",
+    "url": "https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/",
+    "kind": "official"
+  },
+  "url": "https://p-p.redbull.com/rb-wrccom-lintegration-yv-prod/api/events/635.json",
+  "file": "wrc-rally.json",
+  "sha256": "2228f78edb8bee9967b2bf1fe38b650e3eaf1b6aa6a9617b22e92a1a6aa7c3ac",
+  "captured_at": "2026-10-07T10:08:21.087840+00:00",
+  "media_type": "application/json",
+  "context": {
+    "kind": "classification",
+    "adapter": "wrc-json",
+    "championship": "WRC",
+    "season": 2026,
+    "meeting_key": "monte-carlo",
+    "meeting_name": "Rallye Monte Carlo",
+    "session": "rally",
+    "session_number": 1,
+    "expected_entries": 48,
+    "context_quote": "Rallye Monte Carlo"
+  }
+}

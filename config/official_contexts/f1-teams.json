@@ -1,0 +1,9 @@
+{
+  "kind": "standings",
+  "adapter": "f1-standings-html",
+  "season": 2024,
+  "championship": "F1",
+  "category": "teams",
+  "expected_entries": 10,
+  "context_quote": "2024 Teams' Standings"
+}

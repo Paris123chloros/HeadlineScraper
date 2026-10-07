@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "official-synthetic-tests",
+    "name": "Synthetic sporting records (not real events)",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/fia-investigation-synthetic",
+  "file": "fia-investigation-synthetic.txt",
+  "sha256": "778f5cbbec13dce6470dec5ede35619ca4d0af55f1c3484b15fbf3cc7de3a220",
+  "captured_at": "2026-10-07T10:16:36.642766+00:00",
+  "media_type": "text/plain",
+  "context": {
+    "kind": "announcement",
+    "adapter": "fia-notice",
+    "key": "fia-investigation-synthetic",
+    "title_quote": "Synthetic investigation notice",
+    "issuer": "Synthetic FIA fixture",
+    "jurisdiction": "Synthetic fixture only",
+    "championships": [
+      "F1"
+    ],
+    "notice_type": "investigation_announced",
+    "statement": {
+      "quote": "The FIA has opened an investigation into an allegation. No finding has been issued."
+    },
+    "procedural_status": "investigation",
+    "procedural_status_evidence": {
+      "quote": "The FIA has opened an investigation into an allegation. No finding has been issued."
+    }
+  }
+}

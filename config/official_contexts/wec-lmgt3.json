@@ -1,0 +1,12 @@
+{
+  "kind": "classification",
+  "adapter": "wec-csv",
+  "championship": "WEC",
+  "season": 2026,
+  "meeting_key": "fuji",
+  "meeting_name": "6 Hours of Fuji",
+  "session": "race",
+  "expected_entries": 18,
+  "category_scope": "LMGT3",
+  "context_quote": "06_FUJI SPEEDWAY"
+}

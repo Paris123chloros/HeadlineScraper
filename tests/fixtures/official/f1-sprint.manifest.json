@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provenance": "excerpt",
+  "source": {
+    "key": "f1-official-results",
+    "name": "Formula 1 official results",
+    "url": "https://www.formula1.com/",
+    "kind": "official"
+  },
+  "url": "https://www.formula1.com/en/results/2024/races/1234/miami/sprint-results",
+  "file": "f1-sprint.html",
+  "sha256": "b479faf47606669896166bdaabe220b3b29c143d5280b65ea59303f80220b9f6",
+  "captured_at": "2026-10-07T10:32:55.785840+00:00",
+  "media_type": "text/html",
+  "context": {
+    "kind": "classification",
+    "adapter": "f1-html",
+    "championship": "F1",
+    "season": 2024,
+    "meeting_key": "miami",
+    "meeting_name": "Miami Grand Prix",
+    "session": "sprint",
+    "session_number": 1,
+    "expected_entries": 20,
+    "context_quote": "FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2024 - SPRINT"
+  },
+  "original_sha256": "ca9ed801532ecf02c360db821846580ae5e0672d0e070538d7ef95484730d7fb"
+}

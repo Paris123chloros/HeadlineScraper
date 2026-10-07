@@ -6,12 +6,13 @@ scandal/controversy reporting into sourced events and automated English digests.
 It connects to the existing native Windows Ollama app with configurable
 `qwen3.5-instruct:4b`. The user's Docker-hosted Odysseus remains a separate interface.
 
-Phases one through three implement the Python package, validated configuration, CLI,
-Docker foundation, health endpoints, Ollama diagnostic, database migrations,
-versioned documents, entity aliases, evidence-linked claims, and one-shot HTTP/RSS
-collection with source status and history. Live collection is verified for all four
-series and FIA news; official DTM collection still needs an adapter. Race-data
-extraction, the event feed, and reports remain later phases.
+Phases one through four provide local Docker startup, evidence storage, bounded
+HTTP/RSS collection, and official-result parsers for all four series. Structured
+classifications, published F1 standings, reviewed FIA notices, and decision
+revisions retain their source evidence. Live collection and normalization are
+verified for representative official results from each series. Article extraction,
+Qwen inference, event grouping, scheduling, the event feed, and reports are the
+next development segments.
 
 - [Windows Docker and development guide](docs/DEVELOPMENT.md): setup, native Ollama
   connectivity, configuration, CLI commands, and tests.
@@ -20,6 +21,8 @@ extraction, the event feed, and reports remain later phases.
 - [Validation results](docs/VALIDATION.md): checks performed and remaining limits.
 - [Evidence storage](docs/STORAGE.md): migrations, offline imports, revision history,
   and claim traceability.
+- [Official sporting records](docs/OFFICIAL_RECORDS.md): result adapters, live and
+  offline commands, class/session identity, FIA notices, and revisions.
 - [Source collection](docs/COLLECTION.md): catalogue, CLI usage, caching, failure history,
   and current coverage limits.
 - [Deferred local checks](docs/LOCAL_VALIDATION.md): Windows/Ollama checks to revisit

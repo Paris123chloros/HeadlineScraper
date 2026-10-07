@@ -1,0 +1,8 @@
+{
+  "kind": "standings",
+  "adapter": "f1-standings-html",
+  "season": 2024,
+  "category": "drivers",
+  "expected_entries": 24,
+  "context_quote": "2024 Drivers' Standings"
+}
