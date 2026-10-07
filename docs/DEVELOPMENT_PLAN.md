@@ -10,8 +10,22 @@ the supporting evidence, and produce a searchable feed and automated digests.
 
 Coverage includes session results, championship standings, penalties,
 investigations, appeals, regulations, calendar changes, driver contracts,
-injuries, team developments, and wider news relevant to the sport. Contract
-announcements, negotiations, and rumors must remain distinguishable.
+injuries, team developments, **FIA announcements**, **scandals and controversies**,
+and wider news relevant to the sport. Contract announcements, negotiations, and
+rumors must remain distinguishable.
+
+FIA announcements include press releases, regulatory and governance decisions,
+safety updates, disciplinary statements, and championship-related notices. Store
+the issuing body, publication date, effective date when supplied, and applicable
+championships. Organization-wide announcements can remain unassigned to a series;
+do not assume a decision applies to every tracked championship.
+
+Scandal and controversy coverage includes reported cheating, sporting or financial
+rule breaches, corruption, event manipulation, misconduct, and governance disputes
+relevant to motorsport. Track these as evolving cases linked to their events and
+claims. Record allegations, responses and denials, investigations, findings,
+sanctions, appeals, exonerations, and corrections separately. The topic label
+identifies coverage; each claim retains its own evidence and procedural status.
 
 Run locally on **Windows with Docker Desktop's WSL2 backend and Linux containers**.
 Reuse the user's existing Docker-hosted Ollama and configurable model tag
@@ -123,10 +137,14 @@ leave the existing scraper usable.
 Tasks:
 
 - Model sources, retrieval attempts, versioned documents, championships, seasons,
-  meetings, sessions, entities, classifications, decisions, claims, events, jobs,
-  extraction runs, and report snapshots.
+  meetings, sessions, entities, classifications, decisions, announcements,
+  controversy cases, claims, events, jobs, extraction runs, and report snapshots.
 - Assign stable IDs and retain aliases for drivers, crews, cars, teams, and
-  manufacturers. Record ambiguous entity matches for review.
+  manufacturers, plus governing bodies and relevant officials. Record ambiguous
+  entity matches for review.
+- Link FIA announcements to their issuing body, affected entities, jurisdiction,
+  and applicable championships. Link controversy cases to allegations, responses,
+  investigations, findings, and outcomes without overwriting earlier assertions.
 - Distinguish publication time, retrieval time, event time, and effective time.
 - Store canonical URLs, content hashes, original attribution, parser versions,
   supporting passages, and model/prompt versions where relevant.
@@ -144,7 +162,8 @@ passages; migrations preserve existing data; conflicting aliases remain visible.
 Tasks:
 
 - Catalogue official championship, governing-body, team, and independent English
-  sources. Record access method, championship coverage, attribution, upstream
+  sources, including direct FIA announcements and decision documents. Record
+  access method, championship coverage, issuing body, attribution, upstream
   origins, refresh interval, and whether a source is currently usable.
 - Implement RSS and HTTP collection with conditional requests, timeouts, response
   size limits, caching, per-host rate limits, redirects, and bounded retry.
@@ -175,6 +194,10 @@ Tasks:
   versions and their source documents.
 - Represent investigations, imposed penalties, appeals, and overturned decisions
   independently from their effect on a classification.
+- Parse FIA notices with announcement type, jurisdiction, affected championships,
+  and effective date when published. Link regulatory and disciplinary announcements
+  to related race records or controversy cases. An announcement of an investigation
+  establishes that the investigation was announced; its allegations remain claims.
 - Store official standings when available. Implement derived standings only with
   versioned championship rules and verified treatment of dropped scores, special
   points, disqualifications, and tie-breaking.
@@ -182,6 +205,8 @@ Tasks:
 **Acceptance:** one completed weekend or meeting from each series matches its
 official records; WEC classes and DTM races remain distinct; an amended-result
 fixture and a penalty-revision fixture preserve their histories.
+FIA fixtures distinguish a published rule change, its effective date, and an
+investigation announcement without treating that announcement as a finding.
 
 ## 05 — Article parsing and relevance
 
@@ -191,15 +216,17 @@ Tasks:
 
 - Extract article title, author, publication time, article body, and source links;
   remove navigation, cookie notices, and repeated page furniture.
-- Define topic categories and deterministic championship/entity hints.
+- Define topic categories and deterministic championship/entity hints, including
+  FIA announcements and scandals/controversies. Support organization-wide news
+  without forcing an unsupported championship assignment.
 - Retain uncertainty in dates and identity matches instead of silently filling
   missing values. Label commentary and rumor reporting explicitly.
 - Detect obvious duplicate and syndicated documents while retaining attribution.
 
 **Acceptance:** reviewed fixtures include race news, a contract announcement,
-rumor, opinion piece, updated article, and unrelated content; extracted evidence
-maps back to the stored source text; parsing failure is distinguishable from an
-irrelevant article.
+rumor, opinion piece, updated article, FIA announcement, scandal allegation,
+response/denial, and unrelated content; extracted evidence maps back to the stored
+source text; parsing failure is distinguishable from an irrelevant article.
 
 ## 06 — Local Qwen extraction
 
@@ -211,6 +238,9 @@ Tasks:
   timeouts, configurable model settings, and schema-constrained responses.
 - Extract championship, topic, entities, claims, attribution, relevant dates,
   uncertainty, and supporting text spans. Split long articles at useful boundaries.
+- For controversy claims, extract who asserts what, the reported procedural status,
+  and any response or outcome in the passage. Preserve the distinction between an
+  allegation, an investigation, and a finding, including in summary wording.
 - Validate schema, evidence passages, dates, identities, and numeric fields against
   source text. Reject unsupported claims and flag ambiguous extraction for review.
 - Record prompt/model versions and extraction duration; keep a manually labeled
@@ -237,12 +267,20 @@ Tasks:
   single-source, disputed, and corrected/superseded. Store the rationale.
 - Represent conflicting assertions together. Link corrections and result amendments
   without erasing previous records.
+- Keep controversy case history and procedural status separate from evidence labels:
+  alleged, under investigation, findings issued, under appeal, and closed, with
+  explicit outcomes such as sanctioned, cleared, overturned, or unresolved where
+  supported. Link denials and exonerations to the assertions they address.
 - Support reversible merge/split and human adjudication with an audit trail.
 
 **Acceptance:** fixtures prove both grouping and separation, including consecutive
 races involving the same driver, the same car number in different series, copied
 announcements, conflicting reports, and subsequent corrections. Labels remain
 attached to claims rather than granting blanket credibility to entire articles.
+An allegation followed by a denial, investigation, and later exoneration remains
+one traceable case; earlier reports stay attributed and the current outcome is
+visible. Independent corroboration of an allegation's publication is distinguished
+from corroboration of the alleged conduct.
 
 ## 08 — Scheduling and resilient jobs
 
@@ -271,6 +309,8 @@ Tasks:
 
 - Expose paginated events, search, championship/topic/date filters, and event detail
   with entities, evidence links, supporting passages, and revision history.
+- Provide FIA-announcement and scandal/controversy filters, plus case detail showing
+  allegations, responses, official decisions, current status, and the case timeline.
 - Show source freshness, failed collection, pending extraction, and uncertainty.
 - Add queued manual-refresh and review actions with an auditable outcome.
 - Escape source content in templates and serve local assets. Keep the interface
@@ -287,7 +327,9 @@ Empty results and incomplete collection coverage appear distinctly.
 Tasks:
 
 - Generate daily and on-demand digests with sections for results, penalties,
-  driver/team developments, sport news, and corrections/unresolved reports.
+  driver/team developments, FIA announcements, scandals/controversies, sport news,
+  and corrections/unresolved reports. Controversy entries preserve attribution,
+  procedural status, relevant responses, and subsequent findings or exonerations.
 - Define the report interval explicitly and persist the included event/claim
   versions. Separate event occurrence from newly published information.
 - Render deterministic Markdown and HTML with citations and coverage status.
@@ -332,6 +374,7 @@ Tasks:
 
 - Assemble a held-out reference set covering all four series: completed race
   meetings, classes/stages, an amendment, a penalty, a contract announcement,
+  an FIA announcement, a controversy with allegation/response/outcome revisions,
   duplicated coverage, conflicting claims, and irrelevant articles.
 - Measure event recall, false merges/splits, claim precision, unsupported report
   statements, source coverage, and end-to-end processing delay.

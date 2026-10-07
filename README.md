@@ -10,8 +10,9 @@ Hope this helps anyone that is new and learing
 ## Motorsport research development
 
 The next version is planned as a local Docker application covering F1, WEC, WRC,
-and DTM, with sourced events, race records, and automated English digests. It will
-reuse an existing Ollama container for local Qwen extraction.
+and DTM, with sourced events, race records, FIA announcements, scandal and
+controversy tracking, and automated English digests. It will reuse an existing
+Ollama container for local Qwen extraction.
 
 See the [development plan](docs/DEVELOPMENT_PLAN.md) for implementation segments,
 dependencies, architecture decisions, and acceptance checks. The existing scraper
