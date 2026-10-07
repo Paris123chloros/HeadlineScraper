@@ -1,0 +1,3 @@
+# Source catalogue and schema will be introduced in phase three.
+# An empty catalogue does not establish live collection coverage.
+sources: []
