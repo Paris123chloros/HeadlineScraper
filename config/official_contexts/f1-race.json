@@ -1,0 +1,12 @@
+{
+  "kind": "classification",
+  "adapter": "f1-html",
+  "championship": "F1",
+  "season": 2024,
+  "meeting_key": "bahrain",
+  "meeting_name": "Bahrain Grand Prix",
+  "session": "race",
+  "session_number": 1,
+  "expected_entries": 20,
+  "context_quote": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2024 - RACE RESULT"
+}

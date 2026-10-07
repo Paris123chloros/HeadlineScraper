@@ -32,6 +32,26 @@ def main(argv: Sequence[str] | None = None) -> int:
     fixture.add_argument("path", help="JSON file path, or - to read stdin")
     trace = commands.add_parser("trace-claim", help="Show and verify a claim's source evidence")
     trace.add_argument("claim_id")
+    official = commands.add_parser(
+        "import-official", help="Import a reviewed official archive manifest"
+    )
+    official.add_argument("path", type=Path)
+    normalize = commands.add_parser(
+        "normalize-official", help="Normalize an archived document version"
+    )
+    normalize.add_argument("document_version_id")
+    normalize.add_argument("--context", type=Path, required=True)
+    bundle = commands.add_parser("bundle-wrc", help="Join explicit archived WRC API components")
+    bundle.add_argument("--components", type=Path, required=True)
+    bundle.add_argument("--context", type=Path, required=True)
+    wec_bundle = commands.add_parser("bundle-wec", help="Join WEC CSV and published class table")
+    wec_bundle.add_argument("--components", type=Path, required=True)
+    wec_bundle.add_argument("--context", type=Path, required=True)
+    commands.add_parser("official-status", help="Show official ingestion outcomes")
+    records = commands.add_parser(
+        "record-history", help="Inspect an immutable sporting record history"
+    )
+    records.add_argument("record_id")
     sources = commands.add_parser("sources", help="Inspect configured sources without fetching")
     status = commands.add_parser(
         "collection-status", help="Inspect collection outcomes and coverage"
@@ -72,6 +92,55 @@ def main(argv: Sequence[str] | None = None) -> int:
         status = check_ollama(settings)
         print(status.model_dump_json(indent=2))
         return 0 if status.status == "ready" else 1
+
+    if args.command in {
+        "import-official",
+        "normalize-official",
+        "official-status",
+        "record-history",
+        "bundle-wrc",
+        "bundle-wec",
+    }:
+        from motorsport_research.championships.json_data import decode
+        from motorsport_research.championships.service import CONTEXT, OfficialService
+
+        try:
+            service = OfficialService(settings.data_dir)
+            if args.command == "import-official":
+                result = service.import_manifest(args.path)
+            elif args.command == "normalize-official":
+                if args.context.stat().st_size > 256 * 1024:
+                    raise ValueError("Official context exceeds 256 KiB")
+                context = CONTEXT.validate_python(decode(args.context.read_bytes()))
+                result = service.normalize(args.document_version_id, context)
+            elif args.command in {"bundle-wrc", "bundle-wec"}:
+                if (
+                    args.context.stat().st_size > 256 * 1024
+                    or args.components.stat().st_size > 256 * 1024
+                ):
+                    raise ValueError("Official context/components exceed 256 KiB")
+                bundle_method = (
+                    service.bundle_wrc if args.command == "bundle-wrc" else service.bundle_wec
+                )
+                result = bundle_method(
+                    decode(args.components.read_bytes()),
+                    CONTEXT.validate_python(decode(args.context.read_bytes())),
+                )
+            elif args.command == "record-history":
+                with open_repository(settings.data_dir, read_only=True) as repository:
+                    result = repository.record_history(args.record_id)
+            else:
+                result = service.status()
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return 0
+        except ValidationError:
+            print(
+                "Invalid official manifest/context; check the documented schema.", file=sys.stderr
+            )
+            return 2
+        except (StorageError, sqlite3.Error, OSError, ValueError) as error:
+            print(f"Official record operation failed: {error}", file=sys.stderr)
+            return 1
 
     if args.command in {"sources", "collect", "collection-status", "collection-history"}:
         from motorsport_research.sources.catalogue import CatalogueError, load_catalogue

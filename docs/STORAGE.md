@@ -126,3 +126,20 @@ automatically deleted. Archive backup/restore and orphan cleanup policies belong
 to the operations phase; corruption and missing files produce explicit failures.
 
 The Windows/Ollama connection remains on the [deferred local checklist](LOCAL_VALIDATION.md).
+
+## Phase-four normalization
+
+Migration five adds `official_ingestions`; prior migrations and evidence remain
+unchanged. A successful attempt identifies its original document version when
+normalizing collection output, the normalized document version, exact sporting
+record version, reviewed context and parser. Replays retain sporting record and
+claim IDs while recording attempts. Parsing/import failures roll back domain
+records and leave a failed audit; schema/file validation happens before ingestion.
+
+Classifications link immutable season/meeting/session versions. Official standings
+use classification records with `record_type: standings` and published scores.
+Announcements/decisions retain exact passage selections, day-precision dates and
+related record-version IDs in their payload. Decisions never apply an unverified
+change to a classification. Multi-document WRC/WEC archives retain original
+component bytes, URLs and checksums, plus original collected version IDs when
+assembled with the bundle commands. See [official records](OFFICIAL_RECORDS.md).

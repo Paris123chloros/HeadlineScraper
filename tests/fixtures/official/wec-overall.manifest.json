@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "wec-official-timing",
+    "name": "WEC official timing (Alkamel)",
+    "url": "https://fiawec.alkamelsystems.com/",
+    "kind": "official"
+  },
+  "url": "https://fiawec.alkamelsystems.com/Results/15_2026/06_FUJI%20SPEEDWAY/679_FIA%20WEC/202609271100_Race/06_Hour%206/03_Classification_Race_Hour%206_Final.CSV",
+  "file": "wec-overall.csv",
+  "sha256": "846a742bdaffd737e1abda6dc17936ddba931813d144a58f0ffcf78142ae9b4b",
+  "captured_at": "2026-10-07T09:51:49.291857+00:00",
+  "media_type": "text/csv",
+  "context": {
+    "kind": "classification",
+    "adapter": "wec-csv",
+    "championship": "WEC",
+    "season": 2026,
+    "meeting_key": "fuji",
+    "meeting_name": "6 Hours of Fuji",
+    "session": "race",
+    "expected_entries": 35,
+    "category_scope": null,
+    "context_quote": "06_FUJI SPEEDWAY"
+  }
+}

@@ -1,15 +1,14 @@
 # Motorsport research: development plan
 
-Status: phases one through three implemented. Live source collection is verified
-for all four series and FIA news; DTM uses an independent feed while its official
-index awaits an adapter.
-See [collection usage and limitations](COLLECTION.md). Race-data extraction,
-event processing, and reporting remain in the backlog. See
-[development and local startup](DEVELOPMENT.md) for the current workflow and
-validation boundaries, and [validation results](VALIDATION.md) for checks actually
-performed. Windows Docker Desktop and the user's installed Qwen model remain
-pending local validation; remind the user at the next local validation session
-using the [deferred checklist](LOCAL_VALIDATION.md).
+Status: phases one through four implemented for the reviewed source formats.
+Official results from F1, WEC, WRC and DTM can now be collected and normalized;
+FIA notices and decision revisions retain evidence. See
+[official record usage and coverage limits](OFFICIAL_RECORDS.md) and
+[validation results](VALIDATION.md). Phase five is next: article parsing and
+relevance. Automatic source discovery, Qwen extraction, event grouping, scheduling,
+and reporting remain in the backlog. Windows Docker Desktop and the user's
+installed Qwen model remain pending local validation; remind the user at their
+next local validation session using the [deferred checklist](LOCAL_VALIDATION.md).
 
 ## Product agreement
 

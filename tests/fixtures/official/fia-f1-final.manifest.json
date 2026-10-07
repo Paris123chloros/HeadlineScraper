@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "fia-official-records",
+    "name": "FIA official records",
+    "url": "https://www.fia.com/",
+    "kind": "official"
+  },
+  "url": "https://www.fia.com/sites/default/files/doc_32_-_2024_bahrain_grand_prix_-_final_race_classification.pdf",
+  "file": "fia-f1-final.pdf",
+  "sha256": "e07551d61f1ba131d5336e50ada25af0a7283fcd1f20b0569244681f059d30e9",
+  "captured_at": "2026-10-07T09:49:44.881134+00:00",
+  "media_type": "application/pdf",
+  "context": {
+    "kind": "classification",
+    "adapter": "fia-f1-pdf",
+    "championship": "F1",
+    "season": 2024,
+    "meeting_key": "bahrain",
+    "meeting_name": "Bahrain Grand Prix",
+    "session": "race",
+    "session_number": 1,
+    "expected_entries": 20,
+    "context_quote": "2024 BAHRAIN GRAND PRIX"
+  }
+}

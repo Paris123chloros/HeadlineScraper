@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provenance": "excerpt",
+  "source": {
+    "key": "f1-official-results",
+    "name": "Formula 1 official results",
+    "url": "https://www.formula1.com/",
+    "kind": "official"
+  },
+  "url": "https://www.formula1.com/en/results/2024/races/1229/bahrain/race-result",
+  "file": "f1-race.html",
+  "sha256": "4e7be984c530aaf1f4ccb1fdf3d6c082073b1afea0a18525e59fa17acbb6c200",
+  "captured_at": "2026-10-07T09:46:30.604620+00:00",
+  "media_type": "text/html",
+  "context": {
+    "kind": "classification",
+    "adapter": "f1-html",
+    "championship": "F1",
+    "season": 2024,
+    "meeting_key": "bahrain",
+    "meeting_name": "Bahrain Grand Prix",
+    "session": "race",
+    "session_number": 1,
+    "expected_entries": 20,
+    "context_quote": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2024 - RACE RESULT"
+  },
+  "original_sha256": "09aa503829e465d4a0c54864b74f5d522bc25dd506fc9985a8ab561c2d15e49d"
+}

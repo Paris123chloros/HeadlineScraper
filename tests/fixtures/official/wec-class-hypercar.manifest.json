@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "wec-official-timing",
+    "name": "WEC official timing (Alkamel)",
+    "url": "https://fiawec.alkamelsystems.com/",
+    "kind": "official",
+    "upstream_source_id": null
+  },
+  "url": "https://fiawec.alkamelsystems.com/Results/15_2026/06_FUJI%20SPEEDWAY/679_FIA%20WEC/202609271100_Race/06_Hour%206/03_Classification_Race_Hour%206_Final.CSV",
+  "file": "wec-class-hypercar.json",
+  "sha256": "ff623e24f568a866184a0526bfcd3e1340984643130b5f93ec29f4686cb64c64",
+  "original_sha256": null,
+  "captured_at": "2026-10-07T09:48:32.563883+00:00",
+  "media_type": "application/json",
+  "context": {
+    "kind": "classification",
+    "adapter": "wec-class-bundle",
+    "championship": "WEC",
+    "season": 2026,
+    "meeting_key": "fuji",
+    "meeting_name": "6 Hours of Fuji",
+    "session": "race",
+    "session_number": 1,
+    "category_scope": "HYPERCAR",
+    "expected_entries": 17,
+    "event_date": null,
+    "context_quote": "06_FUJI SPEEDWAY"
+  }
+}

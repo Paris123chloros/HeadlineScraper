@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provenance": "excerpt",
+  "source": {
+    "key": "f1-official-results",
+    "name": "Formula 1 official results",
+    "url": "https://www.formula1.com/",
+    "kind": "official"
+  },
+  "url": "https://www.formula1.com/en/results/2024/races/1229/bahrain/qualifying",
+  "file": "f1-qualifying.html",
+  "sha256": "710f0e971459b595b6af09fe7c33cbdd1fd69443ca12504803d1d29c78215139",
+  "captured_at": "2026-10-07T09:46:30.725612+00:00",
+  "media_type": "text/html",
+  "context": {
+    "kind": "classification",
+    "adapter": "f1-html",
+    "championship": "F1",
+    "season": 2024,
+    "meeting_key": "bahrain",
+    "meeting_name": "Bahrain Grand Prix",
+    "session": "qualifying",
+    "session_number": 1,
+    "expected_entries": 20,
+    "context_quote": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2024 - QUALIFYING"
+  },
+  "original_sha256": "bad411bbd0a5dd525153125907df0d9c06b45a6ab8a4a9240b3d51288def78b2"
+}

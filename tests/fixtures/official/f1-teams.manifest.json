@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "provenance": "excerpt",
+  "source": {
+    "key": "f1-official-results",
+    "name": "Formula 1 official results",
+    "url": "https://www.formula1.com/",
+    "kind": "official"
+  },
+  "url": "https://www.formula1.com/en/results/2024/team",
+  "file": "f1-teams.html",
+  "sha256": "0d3e7eea410c57d763efed3ad0a6ccf09fa9cc41dc5fd62f7acb0a7360ddfd04",
+  "captured_at": "2026-10-07T10:32:55.500901+00:00",
+  "media_type": "text/html",
+  "context": {
+    "kind": "standings",
+    "adapter": "f1-standings-html",
+    "season": 2024,
+    "championship": "F1",
+    "category": "teams",
+    "expected_entries": 10,
+    "context_quote": "2024 Teams' Standings"
+  },
+  "original_sha256": "5e18ca02b293cfad673ded6519f6a9157d5f9f2607ad2c275ea60af43d3d507c"
+}

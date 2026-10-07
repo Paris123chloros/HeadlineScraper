@@ -164,3 +164,15 @@ resource hosts must be diagnosed explicitly.
 
 The separate Windows/Ollama connection remains on the
 [deferred local checklist](LOCAL_VALIDATION.md).
+
+## Phase-four structured collection
+
+`collection:2` also archives valid JSON and CSV response bodies for explicit
+normalization. JSON with duplicate keys or non-finite values is refused. PDF
+collection still archives bytes without interpreting sporting meaning; phase-four
+normalizers handle supported PDF layouts in a bounded process. The ordinary news
+catalogue remains the default. Use `config/official_sources.yaml` for reviewed
+result endpoints; official DTM now has a working meeting-scoped public API path.
+The full-season DTM API can ignore identity encoding, which remains an explicit
+unsupported outcome. The smaller reviewed meeting response worked with the
+existing bounded collector. See [official record commands](OFFICIAL_RECORDS.md).

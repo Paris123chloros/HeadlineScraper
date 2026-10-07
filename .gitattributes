@@ -1,0 +1,5 @@
+# Preserve source captures and their checksums on Windows and Linux checkouts.
+tests/fixtures/official/** -text
+# Published bytes include their original whitespace; keep code checks elsewhere.
+tests/fixtures/official/*.html whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+tests/fixtures/official/*.csv whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab

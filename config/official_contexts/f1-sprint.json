@@ -1,0 +1,12 @@
+{
+  "kind": "classification",
+  "adapter": "f1-html",
+  "championship": "F1",
+  "season": 2024,
+  "meeting_key": "miami",
+  "meeting_name": "Miami Grand Prix",
+  "session": "sprint",
+  "session_number": 1,
+  "expected_entries": 20,
+  "context_quote": "FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2024 - SPRINT"
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic",
+  "source": {
+    "key": "official-synthetic-tests",
+    "name": "Synthetic sporting records (not real events)",
+    "url": "https://example.invalid/",
+    "kind": "unknown"
+  },
+  "url": "https://example.invalid/fia-penalty-synthetic",
+  "file": "fia-penalty-synthetic.txt",
+  "sha256": "669f7c3c30f2780cf79b1b3012f752419e39e270a7a36e5e6b7331f174eb8245",
+  "captured_at": "2026-10-07T10:16:36.642899+00:00",
+  "media_type": "text/plain",
+  "context": {
+    "kind": "decision",
+    "adapter": "fia-notice",
+    "key": "synthetic-penalty-case",
+    "title_quote": "Synthetic steward decision",
+    "issuer": "Synthetic FIA fixture",
+    "jurisdiction": "Synthetic fixture only",
+    "championships": [
+      "F1"
+    ],
+    "notice_type": "disciplinary_decision",
+    "statement": {
+      "quote": "A five second time penalty is imposed on car 8."
+    },
+    "procedural_status": "imposed",
+    "procedural_status_evidence": {
+      "quote": "A five second time penalty is imposed on car 8."
+    },
+    "sanction": {
+      "quote": "A five second time penalty is imposed on car 8."
+    }
+  }
+}

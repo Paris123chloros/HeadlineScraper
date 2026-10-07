@@ -1,5 +1,66 @@
 # Development validation
 
+## Phase four: official race records and decisions
+
+Validated on Linux in the cloud on 2026-10-07, using Python 3.12 and the
+`motorsport-research:phase-four` image.
+
+| Check | Result |
+| --- | --- |
+| Complete Python suite | 130 passed; one existing Starlette deprecation warning |
+| Fixed reference fields across 17 classifications / 421 rows | Passed: all four series |
+| F1 Bahrain full weekend and separate FIA final PDF | Passed: all 20 entries per session |
+| F1 Miami sprint and 2024 driver/constructor standings | Passed: published scoring preserved |
+| WEC Fuji full race, distinct Hypercar/LMGT3 scopes and full crews | Passed: 35 entries; 17 and 18 per class |
+| WEC published Hypercar class-table/CSV cross-check | Passed: 17 joined entries, statuses retained |
+| WRC Monte Carlo rally and final-stage classifications | Passed: 48 rally and 56 stage rows; crew/category/rejoin evidence |
+| DTM Red Bull Ring full weekend | Passed: seven sessions, 21 entries each; race one/two and DSQ/DNF distinct |
+| Driver case variants across F1/FIA sources share a stable meeting identity | Passed; no duplicate drivers |
+| Replay, amended classifications and A/B/A reversions | Passed; original record/document/claim histories retained |
+| FIA rule date, investigation, imposed/overturned decision handling | Passed with explicitly synthetic procedure fixtures |
+| Published FIA calendar notice and organization-wide jurisdiction | Passed with actual HTML capture; no forced tracked championship |
+| Ingestion failure audit and transaction rollback | Passed |
+| Previous-schema migration with existing evidence | Passed; archived evidence retained |
+| CLI import, normalization, bundles, history and status | Passed, including UTF-8 BOM contexts for PowerShell |
+| PDF isolated extraction, official document and invalid PDF failure | Passed; bounded Linux subprocess |
+| Live collection and normalization from F1, WEC, WRC and DTM official result endpoints | Passed in the cloud Python environment |
+| Live WEC class-table bundle and WRC final-stage bundle | Passed: 17 and 56 normalized rows |
+| Locked dependency sync, Ruff lint/format, wheel contents and Compose configuration | Passed |
+| Docker CLI, non-root volumes, startup and restart | Passed |
+| Docker FIA PDF import/replay/evidence and persisted classification | Passed: 20 rows; final state and lap deficits preserved |
+| Previous Docker collection/304/Ollama diagnostic checks | Passed using isolated synthetic services |
+| Original Selenium prototype import | Passed; original source unchanged |
+| User's Windows Docker Desktop, installed Ollama and real inference | Pending local validation |
+| Hosted GitHub Actions | Configured; no hosted run observed |
+
+Live collection uses the reviewed endpoints in `config/official_sources.yaml`.
+The WRC public service was discovered in the bundle loaded by the official WRC
+results component. DTM's official results API was discovered in its published
+application code. Its full-season response ignored identity encoding; narrowing
+the request to the reviewed meeting succeeded through the existing bounded
+collector. No compression limits or TLS checks were disabled.
+
+The first expanded Docker check found private file modes on generated public
+fixtures, so the app's non-root user could not read the copied files. Read and
+traversal permissions on those new public fixtures were corrected, and the final
+image/check passed. Application execution remains non-root.
+
+These checks cover the pinned layouts and reviewed records. WEC's CSV does not
+publish class ranks; its Hypercar class table was separately verified, while
+LMGT3 class-table retrieval remains unverified. Published website ranks and CSV
+statuses are preserved even where a publisher numbers retired rows. Only F1
+standings are implemented, and no championship scores are derived. FIA notice
+interpretation is reviewed metadata; procedure fixtures are synthetic. Claims
+remain unassessed, and these development references do not constitute a held-out
+accuracy evaluation or automatic verification of truth.
+
+New-meeting discovery, article relevance/extraction, Qwen inference, scheduling,
+event grouping and reports remain subsequent development work. Cloud source
+network requirements and startup instructions were saved to the onboarding draft;
+saving does not publish or prove fresh-task restoration. See
+[official-record usage](OFFICIAL_RECORDS.md) and the
+[deferred Windows/Ollama checks](LOCAL_VALIDATION.md).
+
 ## Phase three: source collection
 
 Validated on Linux in the cloud on 2026-10-07, with Python 3.12 and the
@@ -114,5 +175,4 @@ model inference capability, or factual extraction quality. Production Compose us
 Docker Desktop's host DNS and requires no external Ollama network.
 
 See [the development guide](DEVELOPMENT.md) for repeatable commands and local
-Windows/Ollama verification. Phase four is the next implementation segment:
-official race data and decisions.
+Windows/Ollama verification. Phase five is the next implementation segment: article parsing and relevance.

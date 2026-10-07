@@ -1,0 +1,12 @@
+{
+  "kind": "classification",
+  "adapter": "wrc-json",
+  "championship": "WRC",
+  "season": 2026,
+  "meeting_key": "monte-carlo",
+  "meeting_name": "Rallye Monte Carlo",
+  "session": "rally",
+  "session_number": 1,
+  "expected_entries": 48,
+  "context_quote": "Rallye Monte Carlo"
+}
