@@ -1,0 +1,31 @@
+{
+  "source": {
+    "key": "fixtures:synthetic-bulletin",
+    "name": "Synthetic bulletin fixture (not real reporting)",
+    "url": "https://example.invalid/bulletins",
+    "kind": "unknown"
+  },
+  "document": {
+    "url": "https://example.invalid/bulletins/fixture-001",
+    "content": "Synthetic fixture: an investigation into a fictional team has opened. No findings have been issued.",
+    "extracted_text": "Synthetic fixture: an investigation into a fictional team has opened. No findings have been issued.",
+    "title": "Synthetic investigation bulletin",
+    "author": "Fixture author",
+    "published_at": "2026-01-01T12:00:00+00:00",
+    "retrieved_at": "2026-01-01T12:05:00+00:00",
+    "source_timezone": "UTC",
+    "parser_version": "synthetic-fixture:1"
+  },
+  "claims": [
+    {
+      "statement": "The synthetic bulletin announces an investigation into a fictional team.",
+      "quote": "an investigation into a fictional team has opened",
+      "assertion_type": "investigation"
+    },
+    {
+      "statement": "The synthetic bulletin states that no findings have been issued.",
+      "quote": "No findings have been issued.",
+      "assertion_type": "reported"
+    }
+  ]
+}

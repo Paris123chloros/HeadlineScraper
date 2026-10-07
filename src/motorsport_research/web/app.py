@@ -1,9 +1,14 @@
+import logging
+import sqlite3
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from motorsport_research import __version__
 from motorsport_research.config import Settings, load_settings
 from motorsport_research.extraction.ollama import check_ollama
+from motorsport_research.storage.database import StorageError
+from motorsport_research.storage.repository import open_repository
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -21,7 +26,8 @@ background:#101820;color:#f4f6f8}h1{line-height:1.2}strong{color:#8ce3c0}</style
 <body><main><h1>Motorsport Research</h1><p><strong>F1 · WEC · WRC · DTM</strong></p>
 <p>A sourced record of race results, penalties, driver developments,
 FIA announcements, and controversies.</p>
-<p>The project foundation is running. Collection, the event feed, and automated
+<p>The project foundation and evidence storage are available.
+Collection, the event feed, and automated
 digests will arrive in subsequent development phases.</p></main></body></html>"""
 
     @app.get("/health/live")
@@ -34,5 +40,21 @@ digests will arrive in subsequent development phases.</p></main></body></html>""
         return JSONResponse(
             content=result.model_dump(), status_code=200 if result.status == "ready" else 503
         )
+
+    @app.get("/health/storage")
+    def storage() -> JSONResponse:
+        try:
+            with open_repository(settings.data_dir, read_only=True) as repository:
+                result = repository.stats()
+            return JSONResponse(result)
+        except (StorageError, sqlite3.Error, OSError) as error:
+            logging.getLogger(__name__).warning("Storage readiness check failed: %s", error)
+            return JSONResponse(
+                {
+                    "status": "unavailable",
+                    "detail": "Storage is not ready; run db-init and check logs.",
+                },
+                status_code=503,
+            )
 
     return app

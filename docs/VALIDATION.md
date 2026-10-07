@@ -1,4 +1,35 @@
-# Phase-one validation
+# Development validation
+
+## Phase two: evidence persistence
+
+Validated on Linux in the development cloud environment using Python 3.12 and
+the built `motorsport-research:phase-two` Docker image.
+
+| Check | Result |
+| --- | --- |
+| Complete Python suite, including storage integration tests | 47 passed |
+| Migration upgrades, checksum refusal, and failed-upgrade rollback | Passed |
+| Document revisions/reversions, immutable history, and transaction rollback | Passed |
+| Exact Unicode evidence spans, content integrity, and extraction provenance | Passed |
+| Scoped alias ambiguity, announcement scope, and case history | Passed |
+| Original publisher offset and chronological UTC timestamp ordering | Passed |
+| Ruff lint/format, wheel build, and Compose configuration | Passed |
+| Fresh Docker image with packaged migrations | Passed |
+| Compose storage initialization and read-only storage health | Passed |
+| Repeated offline import and claim tracing inside Docker | Passed |
+| Imported document/claim persistence after dashboard restart | Passed |
+| Existing Ollama diagnostic acceptance checks | Passed with synthetic responses |
+| User's Windows/Ollama connection and real Qwen inference | Pending |
+
+The fixture is fictional and offline. These checks establish persistence and
+traceability; they do not establish extraction accuracy, corroboration quality,
+or truth. A matching evidence quote leaves its claim `unassessed`.
+
+The Python suite still emits the Starlette dependency deprecation warning described
+below. The Windows checks are retained in the
+[deferred local validation checklist](LOCAL_VALIDATION.md).
+
+## Phase one: foundations
 
 Validated in the development cloud environment on Linux with Python 3.12.14,
 Docker Engine 28.4.0, and Compose 2.40.3. The built image uses Python 3.12.15.
@@ -39,5 +70,5 @@ model inference capability, or factual extraction quality. Production Compose us
 Docker Desktop's host DNS and requires no external Ollama network.
 
 See [the development guide](DEVELOPMENT.md) for repeatable commands and local
-Windows/Ollama verification. Phase two is the next implementation segment:
-versioned source records, identity, database migrations, and evidence persistence.
+Windows/Ollama verification. Phase three is the next implementation segment:
+the source catalogue and repeatable collection.

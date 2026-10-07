@@ -1,1 +1,1 @@
-"""Evidence persistence and migrations, introduced in phase two."""
+"""Versioned evidence persistence, identity, and transactional SQLite migrations."""

@@ -1,11 +1,12 @@
 # Motorsport research: development plan
 
-Status: phase-one foundations implemented; collection, storage, event processing,
-and reporting remain in the implementation backlog. See
+Status: phase-one foundations and phase-two persistence implemented; collection,
+race-data extraction, event processing, and reporting remain in the backlog. See
 [development and local startup](DEVELOPMENT.md) for the current workflow and
 validation boundaries, and [validation results](VALIDATION.md) for checks actually
 performed. Windows Docker Desktop and the user's installed Qwen model remain
-pending local validation.
+pending local validation; remind the user at the next local validation session
+using the [deferred checklist](LOCAL_VALIDATION.md).
 
 ## Product agreement
 

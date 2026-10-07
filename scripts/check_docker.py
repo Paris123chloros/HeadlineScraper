@@ -41,9 +41,15 @@ def main() -> None:
         project,
     ]
 
-    def run(command: list[str], expected: int = 0) -> str:
+    def run(command: list[str], expected: int = 0, *, input_text: str | None = None) -> str:
         result = subprocess.run(
-            command, cwd=ROOT, env=environment, text=True, capture_output=True, timeout=60
+            command,
+            cwd=ROOT,
+            env=environment,
+            text=True,
+            capture_output=True,
+            timeout=60,
+            input=input_text,
         )
         if result.returncode != expected:
             raise RuntimeError(
@@ -137,6 +143,37 @@ HTTPServer(('0.0.0.0', 11434), Handler).serve_forever()
         )
         run([*compose, "up", "--no-build", "--detach", "dashboard"])
         wait_for_liveness()
+        storage = probe("/health/storage")
+        assert storage["http_status"] == 200, storage
+        assert storage["body"]["counts"]["championships"] == 4, storage
+        fixture_input = (ROOT / "tests/fixtures/evidence.json").read_text(encoding="utf-8")
+        import_command = [
+            *compose,
+            "exec",
+            "-T",
+            "dashboard",
+            "motorsport-research",
+            "import-fixture",
+            "-",
+        ]
+        first_import = json.loads(run(import_command, input_text=fixture_input))
+        repeated_import = json.loads(run(import_command, input_text=fixture_input))
+        assert first_import["document"]["version_id"] == repeated_import["document"]["version_id"]
+        assert first_import["claim_ids"] == repeated_import["claim_ids"]
+        claim_trace = json.loads(
+            run(
+                [
+                    *compose,
+                    "exec",
+                    "-T",
+                    "dashboard",
+                    "motorsport-research",
+                    "trace-claim",
+                    first_import["claim_ids"][0],
+                ]
+            )
+        )
+        assert claim_trace["assessment"]["label"] == "unassessed", claim_trace
         offline = probe("/health/ollama")
         assert offline["http_status"] == 503, offline
         assert offline["body"]["reachable"] is False, offline
@@ -187,7 +224,11 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         run([*compose, "restart", "dashboard"])
         wait_for_liveness()
         assert probe("/health/ollama")["http_status"] == 200
+        persistent = probe("/health/storage")
+        assert persistent["body"]["counts"]["document_versions"] == 1, persistent
+        assert persistent["body"]["counts"]["claims"] == 2, persistent
         print("PASS: image CLI, Compose startup/restart, local port binding, non-root volumes")
+        print("PASS: migrations, repeatable evidence import, claim trace, persistent records")
         print("PASS: Ollama offline, installed-tag fixture, and missing-tag diagnostic exit code")
         print("Synthetic host routing only; Windows host forwarding and inference are unverified.")
     finally:

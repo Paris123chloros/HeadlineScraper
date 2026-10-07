@@ -1,8 +1,11 @@
-# Phase-one development and local startup
+# Development and local startup
 
-The package, configuration, CLI, liveness endpoint, and Ollama model diagnostic
-are implemented. Collection, persistent jobs, race records, and digests are later
-phases. The Compose `worker` is currently an opt-in, one-shot diagnostic scaffold.
+Phases one and two implement the package, configuration, CLI, health endpoints,
+Ollama model diagnostic, migrations, and versioned evidence storage. Collection,
+race-data extraction, persistent job execution, and digests are later phases.
+The Compose `worker` is currently an opt-in, one-shot diagnostic scaffold.
+See [storage commands and provenance](STORAGE.md) and the
+[deferred local validation checklist](LOCAL_VALIDATION.md).
 
 ## Windows Docker Desktop setup
 
@@ -36,6 +39,7 @@ docker compose config --quiet
 docker compose up --build -d dashboard
 docker compose ps
 Invoke-RestMethod http://127.0.0.1:8000/health/live
+Invoke-RestMethod http://127.0.0.1:8000/health/storage
 docker compose run --rm worker
 ```
 
@@ -62,8 +66,9 @@ docker compose down
 `docker compose down` retains the named volumes and leaves your native Ollama app
 and separate Odysseus container running. The research app runs as a
 non-root user; Docker initializes named volume ownership from image directories.
-Database/document/report volumes are reserved for later phases and stored inside
-Docker's Linux filesystem. Keep `.env` and local outputs outside version control.
+The `storage-init` service applies migrations before dependent services start.
+Database and document files persist in named volumes; the report volume is reserved
+for later phases. Keep `.env` and local outputs outside version control.
 
 For builds behind a trusted TLS-inspecting proxy, the Dockerfile accepts an
 optional BuildKit secret named `build_ca_bundle`, containing a trusted PEM CA
@@ -136,6 +141,7 @@ The process environment overrides the Docker-oriented `.env` settings:
 $env:OLLAMA_BASE_URL = "http://127.0.0.1:11434"
 uv run --locked motorsport-research config
 uv run --locked motorsport-research check-ollama
+uv run --locked motorsport-research db-init
 uv run --locked motorsport-research serve
 ```
 
@@ -164,6 +170,8 @@ CLI exit codes: `0` for success, `1` for failed Ollama diagnostics, and `2` for
 invalid configuration or command arguments. Diagnostics print JSON to stdout;
 application logs are JSON records on stderr. Use `python -m motorsport_research`
 as an equivalent entry point.
+Storage commands return `1` for operational errors and `2` for invalid fixture
+input. `db-init` is repeatable; offline imports keep claims explicitly unassessed.
 
 ## Original Selenium prototype
 

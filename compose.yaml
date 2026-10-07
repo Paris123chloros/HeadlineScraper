@@ -22,8 +22,15 @@ x-application: &application
       max-file: "3"
 
 services:
+  storage-init:
+    <<: *application
+    command: [db-init]
+    restart: "no"
   dashboard:
     <<: *application
+    depends_on:
+      storage-init:
+        condition: service_completed_successfully
     ports:
       - "127.0.0.1:${DASHBOARD_PORT:-8000}:8000"
     restart: unless-stopped
@@ -39,6 +46,9 @@ services:
       retries: 3
   worker:
     <<: *application
+    depends_on:
+      storage-init:
+        condition: service_completed_successfully
     # Phase-one diagnostic scaffold; persistent jobs are implemented in phase eight.
     profiles: [tools]
     command: [check-ollama]
