@@ -1,0 +1,167 @@
+{
+  "race": {
+    "body": "Synthetic fixture only: the fictional F1 race finished with Driver Example leading the classification. No real result is described by this test article.\n\nThe fictional driver completed twenty laps and finished ahead of the second team. A fictional race official confirmed that the standings remain provisional. Résumé 🏁 is preserved.\n\nPublished source link",
+    "title": "Fictional F1 race report",
+    "championships": [
+      "F1"
+    ],
+    "topics": [
+      "race"
+    ],
+    "labels": [
+      "reporting"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  },
+  "contract": {
+    "body": "Synthetic fixture only: Fictional Team announced that Driver Example has signed a two-year contract to race in the World Endurance Championship. This is not a real announcement.\n\nThe team said the driver will join its fictional crew next season. The contract covers the planned campaign, while the remaining seats have not been announced.\n\nPublished source link",
+    "title": "Fictional WEC driver signs contract",
+    "championships": [
+      "WEC"
+    ],
+    "topics": [
+      "contracts"
+    ],
+    "labels": [
+      "reporting"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  },
+  "rumor": {
+    "body": "Synthetic fixture only: sources say that Driver Example could sign a contract with Fictional Team in the WRC. The report is unconfirmed and describes a fictional rumor.\n\nNegotiations are reportedly continuing, but the driver and manufacturer have not announced any deal. The report does not establish that a signing happened or will happen.\n\nPublished source link",
+    "title": "Rumor: Fictional WRC driver may join team",
+    "championships": [
+      "WRC"
+    ],
+    "topics": [
+      "contracts"
+    ],
+    "labels": [
+      "rumor_reporting"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  },
+  "opinion": {
+    "body": "Synthetic fixture only: this commentary argues that fictional DTM regulations could be improved before the next championship season. It expresses an opinion rather than a decision.\n\nThe author suggests a different penalty system and believes teams should discuss safety with the governing body. No official rule change has been announced in this fictional scenario.\n\nPublished source link",
+    "title": "Opinion: Fictional DTM rules need review",
+    "championships": [
+      "DTM"
+    ],
+    "topics": [
+      "regulations"
+    ],
+    "labels": [
+      "opinion"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  },
+  "fia": {
+    "body": "Synthetic fixture only: the FIA announced a fictional organization-wide governance review and safety meeting. This invented bulletin does not identify an affected championship or publish new rules.\n\nThe fictional notice invites organizations to submit feedback on the proposed process. It does not announce a finding, penalty, sanction, or investigation into an individual person.\n\nPublished source link",
+    "title": "Fictional FIA governance announcement",
+    "championships": [],
+    "topics": [
+      "fia-announcements"
+    ],
+    "labels": [
+      "reporting"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  },
+  "allegation": {
+    "body": "Synthetic fixture only: an unnamed source alleged that Fictional Team breached a fictional sporting rule in F1. This is an invented allegation and no real team is implicated.\n\nThe report says an investigation was announced into the allegation, but no findings have been published. The accusation is disputed and does not establish cheating or guilt.\n\nPublished source link",
+    "title": "Fictional F1 scandal allegation",
+    "championships": [
+      "F1"
+    ],
+    "topics": [
+      "controversies"
+    ],
+    "labels": [
+      "reporting"
+    ],
+    "cues": [
+      "allegation",
+      "investigation"
+    ],
+    "outcome": "relevant"
+  },
+  "response": {
+    "body": "Synthetic fixture only: Fictional Team denied the fictional F1 allegation and issued a response saying it had followed the rules. This invented denial is not an adjudicated outcome.\n\nThe governing body said its investigation continues and that no finding has been issued. The response remains attributed to the team and does not itself establish exoneration.\n\nPublished source link",
+    "title": "Fictional team denies F1 allegation",
+    "championships": [
+      "F1"
+    ],
+    "topics": [
+      "controversies"
+    ],
+    "labels": [
+      "reporting"
+    ],
+    "cues": [
+      "response",
+      "investigation"
+    ],
+    "outcome": "relevant"
+  },
+  "unrelated": {
+    "body": "Synthetic fixture only: a fictional gardening club has published advice about growing beans and watering plants during warm weather. This article has no connection with motorsport.\n\nThe gardener recommends inspecting the soil each morning and using a small amount of water. The club has invited local residents to share their favourite vegetable recipes.\n\nPublished source link",
+    "title": "Fictional gardening bulletin",
+    "championships": [],
+    "topics": [],
+    "labels": [
+      "reporting"
+    ],
+    "cues": [],
+    "outcome": "irrelevant"
+  },
+  "updated": {
+    "body": "Synthetic fixture only: the fictional F1 race finished with Driver Example leading the classification. No real result is described by this test article.\n\nThe fictional driver completed twenty-one laps and finished ahead of the second team. A fictional race official confirmed that the standings remain provisional. Résumé 🏁 is preserved.\n\nPublished source link",
+    "title": "Fictional F1 race report",
+    "championships": [
+      "F1"
+    ],
+    "topics": [
+      "race"
+    ],
+    "labels": [
+      "reporting"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  },
+  "copy": {
+    "body": "Synthetic fixture only: sources say that Driver Example could sign a contract with Fictional Team in the WRC. The report is unconfirmed and describes a fictional rumor.\n\nNegotiations are reportedly continuing, but the driver and manufacturer have not announced any deal. The report does not establish that a signing happened or will happen.\n\nPublished source link",
+    "title": "Rumor: Fictional WRC driver may join team",
+    "championships": [
+      "WRC"
+    ],
+    "topics": [
+      "contracts"
+    ],
+    "labels": [
+      "rumor_reporting"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  },
+  "syndicated": {
+    "body": "Synthetic fixture only: sources say that Driver Example could sign a contract with Fictional Team in the WRC. The report is unconfirmed and describes a fictional rumor.\n\nNegotiations are reportedly continuing, but the driver and manufacturer have not announced any deal. The report does not establish that a signing happened or will happen.\n\nPublished source link",
+    "title": "Rumor: Fictional WRC driver may join team",
+    "championships": [
+      "WRC"
+    ],
+    "topics": [
+      "contracts"
+    ],
+    "labels": [
+      "rumor_reporting"
+    ],
+    "cues": [],
+    "outcome": "relevant"
+  }
+}

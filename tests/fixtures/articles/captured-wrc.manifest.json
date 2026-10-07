@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "motorsport-wrc",
+    "name": "Motorsport.com WRC feed",
+    "url": "https://www.motorsport.com/",
+    "kind": "independent"
+  },
+  "url": "https://www.motorsport.com/wrc/news/sebastien-ogiers-2027-wrc-future-is-undecided-but-he-wont-be-at-monte-carlo/10862667/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-WRC&utm_term=News&utm_content=www",
+  "file": "captured-wrc.html",
+  "sha256": "0f13137277358c799f4d4c35f753d5acdd7ca801183b1efff2bb5873311ddd46",
+  "captured_at": "2026-10-07T12:19:24.347930+00:00",
+  "media_type": "text/html"
+}

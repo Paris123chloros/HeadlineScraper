@@ -1,5 +1,48 @@
 # Development validation
 
+## Phase five: articles and relevance
+
+Validated on Linux in the cloud on 2026-10-07, with Python 3.12 and the
+`motorsport-research:phase-five` image
+(`sha256:48a9837e30f065f6ea71d3538a706ff379d9751b3db1d3f5892e8bd1951c8102`).
+
+| Check | Result |
+| --- | --- |
+| Complete Python suite | 174 passed; one existing Starlette deprecation warning |
+| Reviewed synthetic race, contract, rumor, opinion, update, FIA, allegation, denial and unrelated fixtures | Passed; fixed readable bodies and metadata expectations |
+| Full captured Motorsport.com articles mentioning F1/WEC/WRC/DTM | Passed; reviewed authors/body boundaries; related stories/surveys removed |
+| Captured FIA calendar lead/body, tables and publication/modification values | Passed; no catalogue-based championship assignment |
+| Unicode/inline body spans and original archive integrity | Passed; every fragment maps to stored source text |
+| Date-only, unknown timezone, conflicting dates and absent metadata | Passed; no invented instants |
+| Entity registry ambiguity and changed-registry analysis snapshots | Passed; candidates remain inspectable |
+| Copy/shared-upstream hints and publisher attribution | Passed; no automatic corroboration or merge |
+| Replay, updates, A/B/A reversion and immutable attempts | Passed |
+| Insufficient bodies, index/shell, access challenge, unsupported format and bounds | Passed; distinct from irrelevant success |
+| Invalid JSON-LD, source instructions, encodings and canonical references | Passed; source remains untrusted input |
+| Manifest checksum/path validation, migration 006 upgrade and atomic success audit | Passed |
+| Explicit article collection, conditional 304, host/scheme checks and disabled sources | Passed using bounded collector with synthetic HTTP transport |
+| Live explicit article collection/parsing | Passed for all four Motorsport.com series sources and FIA; verified source spans |
+| Native CLI guide sequence | Passed: schema 6, repeat import, update, unrelated outcome |
+| Locked dependencies, Ruff lint/format, wheel contents, legacy import and Compose configuration | Passed; no dependency changes |
+| Docker article import/replay, revisions, irrelevant outcome and persisted source spans | Passed; non-root volumes and restart verified |
+| Earlier Docker official PDF/feed/304/Ollama diagnostics | Passed with isolated synthetic services |
+| Windows Docker Desktop, native Ollama and real inference | Pending local validation; unchanged deferred checklist |
+| Hosted GitHub Actions | Configured; hosted run not observed |
+
+The first Docker run found that restored public phase-four fixture permissions
+prevented the container user reading a manifest. Read/traversal permissions on
+those public fixtures were corrected; the final Docker check passed and removed
+its temporary containers, networks and volumes. No private data permissions,
+real research volumes or existing Ollama/Odysseus services were changed.
+
+Live receipts reside outside the checkout in the isolated cloud development
+database; committed captures are offline regression evidence. English keyword
+filtering is conservative, with no measured general-news precision/recall claim.
+Championship hints describe mentions, and procedural cues include negated wording.
+No claims, case findings or verified identities are produced in this phase.
+Publisher markup outside reviewed bodies may need another adapter. See
+[article usage and limitations](ARTICLES.md).
+
 ## Phase four: official race records and decisions
 
 Validated on Linux in the cloud on 2026-10-07, using Python 3.12 and the

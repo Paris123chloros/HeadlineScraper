@@ -1,9 +1,10 @@
 # Development and local startup
 
-Phases one through three implement the package, configuration, CLI, health endpoints,
-Ollama model diagnostic, migrations, versioned evidence storage, and HTTP/RSS
-collection. Live collection is verified for all four series and FIA news. Race-data
-extraction, persistent job execution, and digests are later phases.
+Phases one through five implement the package, CLI, health endpoints, Ollama model
+diagnostic, migrations, evidence storage, HTTP/RSS collection, official race records
+and deterministic article preparation. Live collection is verified for all four
+series and FIA news. Qwen extraction, persistent jobs and digests are later phases.
+See [article commands and limits](ARTICLES.md).
 The Compose `worker` is currently an opt-in, one-shot diagnostic scaffold.
 See [storage commands and provenance](STORAGE.md), [source collection](COLLECTION.md), and the
 [deferred local validation checklist](LOCAL_VALIDATION.md).

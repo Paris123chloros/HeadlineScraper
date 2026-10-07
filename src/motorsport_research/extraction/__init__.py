@@ -1,1 +1,1 @@
-"""Local extraction integrations; claim extraction is introduced in phase six."""
+"""Deterministic article preparation; model extraction is a separate stage."""

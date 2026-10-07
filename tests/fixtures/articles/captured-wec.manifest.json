@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "motorsport-wec",
+    "name": "Motorsport.com WEC feed",
+    "url": "https://www.motorsport.com/",
+    "kind": "independent"
+  },
+  "url": "https://www.motorsport.com/wec/news/le-mans-indycar-race-winner-mike-conway-announces-retirement/10862536/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-WEC&utm_term=News&utm_content=www",
+  "file": "captured-wec.html",
+  "sha256": "78808973f77212ceaf23bd7a61733d93e985fcc682072fca6fd04220c9fd7be7",
+  "captured_at": "2026-10-07T12:19:23.969083+00:00",
+  "media_type": "text/html"
+}

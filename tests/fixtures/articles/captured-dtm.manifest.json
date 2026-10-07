@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "provenance": "captured",
+  "source": {
+    "key": "motorsport-dtm",
+    "name": "Motorsport.com DTM feed",
+    "url": "https://www.motorsport.com/",
+    "kind": "independent"
+  },
+  "url": "https://www.motorsport.com/dtm/news/dtm-step-up-made-easier-as-road-to-dtm-winners-support-quadruples/10862467/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-DTM&utm_term=News&utm_content=www",
+  "file": "captured-dtm.html",
+  "sha256": "d67e91e46a451f08d83527d305007751c1a236c327bdbef0d4aee06fee8ff455",
+  "captured_at": "2026-10-07T12:19:25.259760+00:00",
+  "media_type": "text/html"
+}

@@ -1,5 +1,10 @@
 # Phase-two evidence storage
 
+Migration 006 adds immutable `article_parses` and `article_attempts`. Analyses
+reference original document versions, without rewriting archives or adding
+retrievals during parsing. Body fragments map to exact stored source spans;
+registry/parser/rule changes retain previous analyses. See [article preparation](ARTICLES.md).
+
 SQLite stores identities, observations, immutable document versions, claim spans,
 and versioned domain records. Raw documents are content-addressed files under
 `DATA_DIR/documents/<hash-prefix>/<sha256>.bin`; the database is

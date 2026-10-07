@@ -1,5 +1,10 @@
 # Phase-three source collection
 
+Phase five adds `collect-article --source KEY --url URL` and parsing of archived
+article versions, retaining this collector's request limits and audit. See
+[article preparation](ARTICLES.md). Feed links are still not automatically followed;
+index/feed snapshots are not full article bodies.
+
 The collection CLI archives bounded HTTP responses and RSS/Atom snapshots, discovers
 feed article links, and records failures and unchanged responses. It runs without
 Ollama. The catalogue includes official series sites, FIA announcements/document
