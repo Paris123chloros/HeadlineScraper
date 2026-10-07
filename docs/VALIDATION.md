@@ -32,8 +32,11 @@ locked dependency hashes remained enabled. The CA bundle is not retained in the
 image. These are cloud validation overrides, not required Windows defaults.
 
 The Compose acceptance check uses an isolated synthetic Ollama listing and removes
-its containers, volumes, and network afterward. It establishes integration and
-diagnostic behavior, not model inference capability or factual extraction quality.
+its containers, volumes, and network afterward. Following the native-Windows
+correction, the test maps `host.docker.internal` to its private fixture only. It
+establishes integration and diagnostic behavior, not actual Windows host forwarding,
+model inference capability, or factual extraction quality. Production Compose uses
+Docker Desktop's host DNS and requires no external Ollama network.
 
 See [the development guide](DEVELOPMENT.md) for repeatable commands and local
 Windows/Ollama verification. Phase two is the next implementation segment:

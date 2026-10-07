@@ -4,7 +4,7 @@ x-application: &application
   image: ${MOTORSPORT_IMAGE:-motorsport-research:local}
   build: .
   environment:
-    OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://motorsport-ollama:11434}
+    OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
     OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3.5-instruct:4b}
     OLLAMA_TIMEOUT_SECONDS: ${OLLAMA_TIMEOUT_SECONDS:-5}
     REPORT_TIMEZONE: ${REPORT_TIMEZONE:-Europe/Athens}
@@ -14,8 +14,6 @@ x-application: &application
     - research-data:/data
     - source-documents:/data/documents
     - generated-reports:/data/reports
-  networks:
-    - ollama
   init: true
   logging:
     driver: json-file
@@ -45,11 +43,6 @@ services:
     profiles: [tools]
     command: [check-ollama]
     restart: "no"
-
-networks:
-  ollama:
-    external: true
-    name: ${OLLAMA_NETWORK:-motorsport-ai}
 
 volumes:
   research-data:

@@ -3,15 +3,16 @@
 A local motorsport research project covering F1, WEC, WRC, and DTM. The planned
 workflow collects race records, driver and sport news, FIA announcements, and
 scandal/controversy reporting into sourced events and automated English digests.
-It reuses an existing Ollama container with configurable `qwen3.5-instruct:4b`.
+It connects to the existing native Windows Ollama app with configurable
+`qwen3.5-instruct:4b`. The user's Docker-hosted Odysseus remains a separate interface.
 
 Phase one implements the Python package, validated configuration, CLI, Docker
 foundation, liveness endpoint, and a read-only Ollama model diagnostic. Collection,
 persistent evidence records, the event feed, and automated reports are subsequent
 development phases.
 
-- [Windows Docker and development guide](docs/DEVELOPMENT.md): setup, shared Ollama
-  networking, configuration, CLI commands, and tests.
+- [Windows Docker and development guide](docs/DEVELOPMENT.md): setup, native Ollama
+  connectivity, configuration, CLI commands, and tests.
 - [Development plan](docs/DEVELOPMENT_PLAN.md): 12 implementation segments with
   dependencies, deliverables, and acceptance checks.
 - [Validation results](docs/VALIDATION.md): checks performed and remaining limits.

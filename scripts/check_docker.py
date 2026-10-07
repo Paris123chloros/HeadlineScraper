@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import subprocess
+import tempfile
 import time
 import uuid
 from pathlib import Path
@@ -20,15 +21,25 @@ def main() -> None:
     environment = dict(
         os.environ,
         MOTORSPORT_IMAGE=args.image,
-        OLLAMA_NETWORK=project,
-        OLLAMA_BASE_URL="http://motorsport-ollama:11434",
+        OLLAMA_BASE_URL="http://host.docker.internal:11434",
         OLLAMA_MODEL="qwen3.5-instruct:4b",
         OLLAMA_TIMEOUT_SECONDS="1",
         REPORT_TIMEZONE="UTC",
         LOG_LEVEL="INFO",
         DASHBOARD_PORT="0",
     )
-    compose = ["docker", "compose", "--project-name", project]
+    temporary = tempfile.TemporaryDirectory(prefix="motorsport-check-")
+    override_path = Path(temporary.name) / "compose.fixture.json"
+    compose = [
+        "docker",
+        "compose",
+        "--file",
+        str(ROOT / "compose.yaml"),
+        "--file",
+        str(override_path),
+        "--project-name",
+        project,
+    ]
 
     def run(command: list[str], expected: int = 0) -> str:
         result = subprocess.run(
@@ -67,7 +78,9 @@ with response:
 
     fixture_code = """
 import json
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path != '/api/tags':
@@ -79,12 +92,49 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Content-Length', str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+while not Path('/tmp/ollama-fixture-enabled').exists():
+    time.sleep(0.1)
 HTTPServer(('0.0.0.0', 11434), Handler).serve_forever()
 """
     run(["docker", "run", "--rm", args.image, "--version"])
     run(["docker", "network", "create", project])
     fixture_started = False
     try:
+        run(
+            [
+                "docker",
+                "run",
+                "--detach",
+                "--name",
+                fixture,
+                "--network",
+                project,
+                "--entrypoint",
+                "python",
+                args.image,
+                "-u",
+                "-c",
+                fixture_code,
+            ]
+        )
+        fixture_started = True
+        networks = json.loads(
+            run(["docker", "inspect", "--format", "{{json .NetworkSettings.Networks}}", fixture])
+        )
+        fixture_address = networks[project]["IPAddress"]
+        # Test-only host routing prevents any request to the user's real Ollama.
+        override_path.write_text(
+            json.dumps(
+                {
+                    "services": {
+                        name: {"extra_hosts": [f"host.docker.internal:{fixture_address}"]}
+                        for name in ["dashboard", "worker"]
+                    },
+                    "networks": {"default": {"external": True, "name": project}},
+                }
+            ),
+            encoding="utf-8",
+        )
         run([*compose, "up", "--no-build", "--detach", "dashboard"])
         wait_for_liveness()
         offline = probe("/health/ollama")
@@ -109,23 +159,13 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         run(
             [
                 "docker",
-                "run",
-                "--detach",
-                "--name",
+                "exec",
                 fixture,
-                "--network",
-                project,
-                "--network-alias",
-                "motorsport-ollama",
-                "--entrypoint",
                 "python",
-                args.image,
-                "-u",
                 "-c",
-                fixture_code,
+                "from pathlib import Path; Path('/tmp/ollama-fixture-enabled').touch()",
             ]
         )
-        fixture_started = True
         deadline = time.monotonic() + 15
         while time.monotonic() < deadline:
             available = probe("/health/ollama")
@@ -149,12 +189,14 @@ for directory in ['/data', '/data/documents', '/data/reports']:
         assert probe("/health/ollama")["http_status"] == 200
         print("PASS: image CLI, Compose startup/restart, local port binding, non-root volumes")
         print("PASS: Ollama offline, installed-tag fixture, and missing-tag diagnostic exit code")
-        print("Synthetic Ollama fixture only; real model inference and Windows remain unverified.")
+        print("Synthetic host routing only; Windows host forwarding and inference are unverified.")
     finally:
         if fixture_started:
             run(["docker", "rm", "--force", fixture])
-        run([*compose, "down", "--volumes"])
+        if override_path.exists():
+            run([*compose, "down", "--volumes"])
         run(["docker", "network", "rm", project])
+        temporary.cleanup()
 
 
 if __name__ == "__main__":

@@ -7,33 +7,27 @@ phases. The Compose `worker` is currently an opt-in, one-shot diagnostic scaffol
 ## Windows Docker Desktop setup
 
 Use Docker Desktop with its WSL2 backend and Linux containers. Run these commands
-in PowerShell from the repository root. Your existing Ollama container must be
-running; its models and GPU configuration remain managed by your existing setup.
+in PowerShell from the repository root. Start your existing native Windows Ollama
+app. Odysseus is your separate Docker-hosted interface; this project connects
+directly to Ollama and does not manage Odysseus or Ollama's installation/models.
 
 Create the local settings file without overwriting an existing one:
 
 ```powershell
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
-docker ps --format "{{.Names}}"
+Invoke-RestMethod http://127.0.0.1:11434/api/tags
 ```
 
-Choose the name of your existing Ollama container, then create the shared network
-if needed and attach that container:
+Set this endpoint in `.env` for the research containers:
 
-```powershell
-$ollamaContainer = "REPLACE_WITH_YOUR_OLLAMA_CONTAINER_NAME"
-docker network inspect motorsport-ai
-if ($LASTEXITCODE -ne 0) { docker network create motorsport-ai }
-$networks = docker inspect --format '{{json .NetworkSettings.Networks}}' $ollamaContainer | ConvertFrom-Json
-if ($null -eq $networks.'motorsport-ai') {
-    docker network connect --alias motorsport-ollama motorsport-ai $ollamaContainer
-}
+```dotenv
+OLLAMA_BASE_URL=http://host.docker.internal:11434
 ```
 
-If that container was already attached without the `motorsport-ollama` alias, set
-`OLLAMA_BASE_URL=http://YOUR_CONTAINER_NAME:11434` in `.env`. If you use a different
-existing network, set `OLLAMA_NETWORK` accordingly and ensure the configured
-hostname resolves on it. Network attachment does not replace or restart Ollama.
+If you created `.env` from the previous container-based instructions, replace its
+`OLLAMA_BASE_URL` with this address and remove the obsolete `OLLAMA_NETWORK` entry.
+Docker Desktop provides the host DNS name; Compose creates its own application
+network. There is no external-network attachment step or new Ollama service.
 
 Start the dashboard and run the separate Ollama diagnostic:
 
@@ -65,8 +59,8 @@ docker compose run --rm worker --version
 docker compose down
 ```
 
-`docker compose down` retains the named volumes and leaves your existing Ollama
-container running. The external network is user-managed. The app runs as a
+`docker compose down` retains the named volumes and leaves your native Ollama app
+and separate Odysseus container running. The research app runs as a
 non-root user; Docker initializes named volume ownership from image directories.
 Database/document/report volumes are reserved for later phases and stored inside
 Docker's Linux filesystem. Keep `.env` and local outputs outside version control.
@@ -76,6 +70,36 @@ optional BuildKit secret named `build_ca_bundle`, containing a trusted PEM CA
 bundle. Pass it with `docker build --secret id=build_ca_bundle,src=PATH_TO_BUNDLE .`
 alongside your supported proxy configuration. It is used only during dependency
 installation and is not copied into the image. TLS verification remains enabled.
+
+### Diagnosing the Windows/WSL connection
+
+An installation prompt involving WSL does not establish where Ollama's API
+listener runs. Docker Desktop using WSL2 and an Ollama server running inside WSL
+are separate configurations. Check the API from Windows PowerShell first, then
+run `docker compose run --rm worker` to check it from the research container.
+
+If PowerShell succeeds but the container cannot connect, check the existing
+Odysseus interface's configured Ollama endpoint and Windows listener/firewall
+settings. If Ollama needs to accept connections beyond loopback, its supported
+Windows user setting is:
+
+```powershell
+[Environment]::SetEnvironmentVariable("OLLAMA_HOST", "0.0.0.0:11434", "User")
+```
+
+Only apply that change if needed, then fully quit Ollama from the system tray and
+reopen it before retrying the diagnostic. This binds all interfaces; keep firewall
+access limited to the local/Docker clients you intend to allow. Existing Odysseus
+access may mean the necessary listener configuration is already in place.
+
+If PowerShell fails but the API works inside WSL, identify the WSL-hosted server
+and the reachable endpoint already used by Odysseus. Override `OLLAMA_BASE_URL`
+with that verified endpoint; the Windows-host default is not proof that WSL's API
+is forwarded there. WSL NAT, mirrored networking, binding, and firewall settings
+can affect routing, so do not guess an address from the installer prompt.
+
+References: [Ollama Windows environment configuration](https://docs.ollama.com/faq)
+and [Docker Desktop host networking](https://docs.docker.com/desktop/features/networking/).
 
 ## Native development
 
@@ -101,9 +125,11 @@ python scripts/check_docker.py
 
 It checks real container startup/restart, loopback-only port binding, writable
 non-root volumes, and installed/missing/offline model diagnostics. It does not
-connect to or modify your Ollama container, and does not validate real inference.
+connect to or modify your native Ollama or Odysseus installation, and does not
+validate real inference. The fixture overrides host-name routing only for its
+isolated test services; it does not exercise Windows host forwarding.
 
-For native development, a published Ollama port can be reached through localhost.
+For native Windows development, the native Ollama app can be reached through localhost.
 The process environment overrides the Docker-oriented `.env` settings:
 
 ```powershell
@@ -113,21 +139,20 @@ uv run --locked motorsport-research check-ollama
 uv run --locked motorsport-research serve
 ```
 
-Container-to-container diagnostics bypass host HTTP proxy variables, retain TLS
-verification, and do not follow redirects. For Docker development, use the shared
-network hostname rather than `localhost`, which refers to the app container.
+Local API diagnostics bypass host HTTP proxy variables, retain TLS verification,
+and do not follow redirects. Docker development uses `host.docker.internal` to
+reach Windows; `localhost` inside the container refers to that container itself.
 
 ## Settings and CLI behavior
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| `OLLAMA_BASE_URL` | `http://127.0.0.1:11434` natively | HTTP(S) base URL; Compose uses the shared network alias |
+| `OLLAMA_BASE_URL` | `http://127.0.0.1:11434` natively | Compose uses `http://host.docker.internal:11434` for native Windows Ollama |
 | `OLLAMA_MODEL` | `qwen3.5-instruct:4b` | Exact installed tag, configurable without code changes |
 | `OLLAMA_TIMEOUT_SECONDS` | `5` | Positive HTTP timeout, at most 120 seconds |
 | `REPORT_TIMEZONE` | `Europe/Athens` | Valid IANA timezone; reports arrive in a later phase |
 | `LOG_LEVEL` | `INFO` | Case-insensitive standard log level |
 | `DATA_DIR` | `data` natively, `/data` in Docker | Reserved persistent storage root |
-| `OLLAMA_NETWORK` | `motorsport-ai` | Compose external network name |
 | `DASHBOARD_PORT` | `8000` | Host port bound to `127.0.0.1` by Compose |
 
 Settings load from `.env` in the working directory, then process environment

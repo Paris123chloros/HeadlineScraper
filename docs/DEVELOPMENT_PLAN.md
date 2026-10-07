@@ -33,8 +33,11 @@ sanctions, appeals, exonerations, and corrections separately. The topic label
 identifies coverage; each claim retains its own evidence and procedural status.
 
 Run locally on **Windows with Docker Desktop's WSL2 backend and Linux containers**.
-Reuse the user's existing Docker-hosted Ollama and configurable model tag
-`qwen3.5-instruct:4b`. No cloud inference service is required.
+Connect to the user's existing native Windows Ollama app and configurable model
+tag `qwen3.5-instruct:4b`. Odysseus runs separately in Docker as the user's interface.
+The research application calls Ollama's API directly. Confirm Windows/WSL listener
+reachability rather than inferring the server location from an installation prompt.
+No cloud inference service is required.
 
 The defining principle is: **every factual claim retains its evidence, and every
 material revision remains traceable**. Source agreement is evidence of agreement,
@@ -46,9 +49,11 @@ not an automatic guarantee of truth.
 - SQLite with migrations, foreign keys, WAL, short transactions, and a busy timeout.
   One worker owns domain-record writes. The API can enqueue job requests; database
   writes are serialized by SQLite. Run migrations once before either service starts.
-- Docker Compose services for the dashboard and worker. Reuse Ollama through a
-  documented shared Docker network; preserve its existing model storage and GPU
-  configuration. Do not start a second Ollama instance by default.
+- Docker Compose services for the dashboard and worker. Docker Desktop reaches
+  native Windows Ollama through `host.docker.internal:11434` by default; native
+  Python development uses localhost. Preserve Ollama's model storage and GPU
+  configuration and the separate Odysseus container. Research services use their
+  own Compose-managed network and do not start or manage an Ollama server.
 - Named volumes retain the database, source documents, and generated reports.
   Keep the SQLite volume inside Docker's Linux filesystem rather than a Windows
   bind mount. Bind the dashboard's published port to `127.0.0.1`.
@@ -125,9 +130,9 @@ Tasks:
   settings, logging, and exclusions for local data and build outputs.
 - Define `OLLAMA_BASE_URL`, `OLLAMA_MODEL`, and `REPORT_TIMEZONE`; use the agreed
   model tag as a configurable default.
-- Document joining the existing Ollama container to a shared network. Inspect
-  `/api/tags` to verify the requested model exists; report a missing model without
-  automatically pulling models or changing the existing container.
+- Document Docker-to-Windows host connectivity and Windows/WSL listener diagnosis.
+  Inspect `/api/tags` to verify the requested model exists; report a missing model
+  without automatically pulling models or changing the existing installation.
 - Add basic CI for package installation and meaningful tests as they arrive.
 
 **Acceptance:** a fresh Docker build imports the package and runs its CLI; the
@@ -356,7 +361,7 @@ do not omit or double-count entries.
 Tasks:
 
 - Write PowerShell-friendly Docker Desktop/WSL2 setup and startup instructions,
-  Ollama network-attachment steps, model availability checks, and troubleshooting.
+  native Ollama host connectivity, model availability checks, and troubleshooting.
 - Make first-run migrations and startup ordering explicit; add service health
   checks, graceful shutdown, log rotation, and restart policies.
 - Provide versioned backups, restore verification, export, retention settings, and
@@ -367,8 +372,8 @@ Tasks:
   on the user's machine. Make model context and concurrency configurable.
 
 **Acceptance:** verify startup, shutdown, restart, upgrade, and backup restoration
-on Windows Docker Desktop. A fresh installation connects to the existing Ollama
-container and persistent data survives container replacement. Linux-only testing
+on Windows Docker Desktop. A fresh installation connects to the existing native
+Ollama API and persistent data survives research-container replacement. Linux-only testing
 must be reported separately until Windows validation is performed.
 
 ## 12 — End-to-end validation and first release
@@ -434,7 +439,9 @@ These do not replace the required first-release coverage or evidence checks.
 
 Before the related implementation steps, inspect rather than guess:
 
-- The local Ollama container name, network, model tags, and available CPU/GPU/RAM.
+- The Ollama API listener location (Windows or WSL), Docker-reachable endpoint,
+  installed model tags, and available CPU/GPU/RAM. Odysseus's working endpoint can
+  inform diagnosis without making the research application depend on that interface.
 - Actual accessibility and document formats of proposed sources. Previous cloud
   onboarding observed an ESPN proxy denial; that does not establish what is
   reachable from the user's local Windows installation.

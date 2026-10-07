@@ -31,7 +31,7 @@ def check_ollama(
         )
 
     url = f"{str(settings.ollama_base_url).rstrip('/')}/api/tags"
-    # Container-to-container and localhost requests should not use a host HTTP proxy.
+    # Local Ollama requests should not use a host HTTP proxy.
     with httpx.Client(
         timeout=settings.ollama_timeout_seconds,
         trust_env=False,
@@ -58,7 +58,8 @@ def check_ollama(
                 "unavailable",
                 False,
                 None,
-                "Cannot reach Ollama; check OLLAMA_BASE_URL, its Docker network, and timeout.",
+                "Cannot reach Ollama; check OLLAMA_BASE_URL, the server listener, "
+                "Docker host routing, and timeout.",
             )
 
     try:
